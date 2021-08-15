@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "125470493016",
+    "project_id": "psafe-322905",
+    "storage_bucket": "psafe-322905.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125470493016:android:8a7cc5ddbf337e06f5fd2d",
+        "android_client_info": {
+          "package_name": "com.example.psafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "125470493016-t43fcsrfmgb11bdr4eu4v2sv22rfujpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANh-I6fhur65ZD8sDIJhsv64dD3JEgmlk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "125470493016-t43fcsrfmgb11bdr4eu4v2sv22rfujpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
