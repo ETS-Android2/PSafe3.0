@@ -25,7 +25,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 
-
+import com.example.psafe.R;
 import com.example.psafe.databinding.ActivitySignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -86,7 +86,7 @@ public class SignupActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Toast.makeText(SignupActivity.this, "@string/login_success", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, getResources().getString(R.string.login_success) ,Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = fAuth.getCurrentUser();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
 

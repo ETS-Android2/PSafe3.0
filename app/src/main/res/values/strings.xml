@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="mapbox_access_token"> pk.eyJ1IjoiY2hlc3Rlcmh1MDAwOCIsImEiOiJja3NkN2ZveGYwbnllMzFwaTB6anFrMmh1In0.sGe3YiahwOboyt92i2n3OQ</string>
+
     <string name="app_name">PSafe</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -25,6 +28,7 @@
     <string name="password_need">do not use empty password</string>
     <string name="email_need">do not use empty email</string>
     <string name="login_success">login successfully</string>
+    <string name="logout_success"> logout successfully</string>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.

@@ -80,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                Toast.makeText(this, "你点击了“logout”按键！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.logout_success)
+                        , Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
