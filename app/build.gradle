@@ -1,8 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'com.google.secrets_gradle_plugin' version '0.5'
-    id 'com.google.gms.google-services'
 }
+apply plugin:'com.google.gms.google-services'
+
 
 
 
@@ -34,7 +35,14 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    viewBinding {
+        enabled = true
+
+    }
 }
+
+
 
 
 
@@ -44,7 +52,11 @@ dependencies {
 
 
     // Import the Firebase BoM
-    implementation 'com.google.firebase:firebase-bom:28.3.1'
+    implementation 'com.google.firebase:firebase-bom:28.4.0'
+    implementation 'com.google.firebase:firebase-auth'
+
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
 
 
     implementation ('com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.2'){
