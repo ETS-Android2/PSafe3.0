@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,23 +14,42 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.psafe.R;
+import com.example.psafe.databinding.FragmentSlideshowBinding;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SlideshowFragment extends Fragment {
 
     private SlideshowViewModel slideshowViewModel;
+    private Button button;
+    FragmentSlideshowBinding fragmentSlideshowBinding;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
+        fragmentSlideshowBinding = FragmentSlideshowBinding.inflate(getLayoutInflater());
+        View view = fragmentSlideshowBinding.getRoot();
+
         slideshowViewModel =
                 new ViewModelProvider(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
+        //View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+
+        fragmentSlideshowBinding.addtodatabase.setOnClickListener(v -> {
+            slideshowViewModel.addToDatabase();
+        });
+
+
+
+
+
         slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                fragmentSlideshowBinding.textSlideshow.setText(s);
             }
         });
-        return root;
+        return view;
     }
 }

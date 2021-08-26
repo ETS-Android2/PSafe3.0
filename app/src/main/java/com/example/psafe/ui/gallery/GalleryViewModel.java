@@ -4,16 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.psafe.R;
+import com.example.psafe.data.model.News;
+import com.example.psafe.database.Repository;
+
+import java.util.ArrayList;
+
 public class GalleryViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private Repository repository;
 
     public GalleryViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
-    }
+        repository = new Repository();
 
-    public LiveData<String> getText() {
-        return mText;
+    }
+    ArrayList<News> getAllNews(){
+        return repository.getAllNewsArray();
     }
 }
