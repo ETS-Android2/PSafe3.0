@@ -19,6 +19,6 @@ public class GalleryViewModel extends ViewModel {
 
     }
     ArrayList<News> getAllNews(){
-        return repository.getAllNewsArray();
+        return repository.getAllNewsArray1();
     }
 }

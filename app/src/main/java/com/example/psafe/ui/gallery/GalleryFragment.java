@@ -1,5 +1,7 @@
 package com.example.psafe.ui.gallery;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,8 +36,13 @@ public class GalleryFragment extends Fragment {
     private RecyclerView.LayoutManager newsLayoutManager;
     private RecyclerView recyclerView;
 
+    SharedPreferences sp;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
 
 
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
@@ -45,18 +52,27 @@ public class GalleryFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerView);
 
 
+
+
+
         recyclerView.setHasFixedSize(true);
 
         ArrayList<News> test = new ArrayList<News>();
-        test.add(new News());
+        test.add(new News("test news 1"));
+        test.add(new News("test news 2"));
+        test.add(new News("test news 3"));
+        test.add(new News("test news 4"));
+        test.add(new News("test news 5"));
         Log.d(TAG,test.get(0).getId());
         //layout manager
         newsLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(newsLayoutManager);
 
-        //newsAdapter = new NewsRecyclerViewAdapter();
-        newsAdapter = new NewsRecyclerViewAdapter(galleryViewModel.getAllNews());
+        newsAdapter = new NewsRecyclerViewAdapter(test);
+        //newsAdapter = new NewsRecyclerViewAdapter(galleryViewModel.getAllNews());
         //Log.d(TAG,galleryViewModel.getAllNews().get(0).getId());
+
+
 
         recyclerView.setAdapter(newsAdapter);
 

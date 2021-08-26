@@ -86,8 +86,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
-
                 fAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -109,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
 
 
 

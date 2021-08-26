@@ -18,6 +18,14 @@ public class News {
         this.dislike = dislike;
         this.source = source;
     }
+    public News(String title) {
+        this.id = "id";
+        this.title = title;
+        this.content = "content";
+        this.like = -11;
+        this.dislike = -11;
+        this.source = "source";
+    }
 
     public News() {
         this.id = "id";
