@@ -22,8 +22,11 @@
         android:name="com.example.psafe.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
-
-
+    <activity
+        android:id="@+id/mapActivity"
+        android:name="com.example.psafe.ui.maps.MapActivity"
+        android:label="activity_map"
+        tools:layout="@layout/activity_map" />
 
 
 </navigation>
