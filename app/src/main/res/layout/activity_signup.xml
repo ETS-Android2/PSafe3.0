@@ -112,8 +112,25 @@
         android:layout_height="wrap_content"
         android:text="@string/action_sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <Button
+        android:id="@+id/back_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_back_sign_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline10"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -85,7 +85,7 @@ public class MapActivity extends AppCompatActivity implements PermissionsListene
 
                 mapboxMap = map;
 
-                map.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
+                map.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
 
@@ -149,7 +149,7 @@ public class MapActivity extends AppCompatActivity implements PermissionsListene
             loadedMapStyle.addSource(
 // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes from
 // 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-                    new GeoJsonSource("earthquakes",
+                    new GeoJsonSource("crash",
                             new URI("https://vicroadsopendata-vicroadsmaps.opendata.arcgis.com/datasets/e23ee376951548e6a3848249efadf76d_0.geojson?outSR=%7B%22latestWkid%22%3A3111%2C%22wkid%22%3A102171%7D"),
                             new GeoJsonOptions()
                                     .withCluster(true)
@@ -162,7 +162,7 @@ public class MapActivity extends AppCompatActivity implements PermissionsListene
         }
 
 //Creating a marker layer for single data points
-        SymbolLayer unclustered = new SymbolLayer("unclustered-points", "earthquakes");
+        SymbolLayer unclustered = new SymbolLayer("unclustered-points", "crash");
 
         unclustered.setProperties(
                 iconImage("cross-icon-id"),
@@ -192,7 +192,7 @@ public class MapActivity extends AppCompatActivity implements PermissionsListene
 
         for (int i = 0; i < layers.length; i++) {
 //Add clusters' circles
-            CircleLayer circles = new CircleLayer("cluster-" + i, "earthquakes");
+            CircleLayer circles = new CircleLayer("cluster-" + i, "crash");
             circles.setProperties(
                     circleColor(layers[i][1]),
                     circleRadius(18f)
@@ -214,7 +214,7 @@ public class MapActivity extends AppCompatActivity implements PermissionsListene
         }
 
 //Add the count labels
-        SymbolLayer count = new SymbolLayer("count", "earthquakes");
+        SymbolLayer count = new SymbolLayer("count", "crash");
         count.setProperties(
                 textField(Expression.toString(get("point_count"))),
                 textSize(12f),
