@@ -12,6 +12,8 @@ import com.example.psafe.R;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
@@ -96,13 +98,13 @@ public class MapsFragment extends Fragment implements PermissionsListener {
 
 // Disable any type of fading transition when icons collide on the map. This enhances the visual
 // look of the data clustering together and breaking apart.
-                        enableLocationComponent(style);
+
 
 
                         style.setTransition(new TransitionOptions(0, 0, false));
 
-                        //mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-                        //       -37, 144), 3));
+                        mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+                              -37, 144), 10));
 
                         addClusteredGeoJsonSource(style);
                         style.addImage(
@@ -111,8 +113,7 @@ public class MapsFragment extends Fragment implements PermissionsListener {
                                 true
                         );
 
-                        Toast.makeText(getContext(), R.string.zoom_map_in_and_out_instruction,
-                                Toast.LENGTH_SHORT).show();
+                        enableLocationComponent(style);
                     }
                 });
             }
@@ -122,7 +123,7 @@ public class MapsFragment extends Fragment implements PermissionsListener {
     }
 
 
-    @SuppressWarnings( {"MissingPermission"})
+    @SuppressWarnings({"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
 // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(getContext())) {
@@ -191,10 +192,10 @@ public class MapsFragment extends Fragment implements PermissionsListener {
 
 // Use the earthquakes GeoJSON source to create three layers: One layer for each cluster category.
 // Each point range gets a different fill color.
-        int[][] layers = new int[][] {
-                new int[] {50, ContextCompat.getColor(getContext(), R.color.red)},
-                new int[] {10, ContextCompat.getColor(getContext(), R.color.mapbox_plugins_green)},
-                new int[] {0, ContextCompat.getColor(getContext(), R.color.mapbox_blue)}
+        int[][] layers = new int[][]{
+                new int[]{50, ContextCompat.getColor(getContext(), R.color.red)},
+                new int[]{10, ContextCompat.getColor(getContext(), R.color.mapbox_plugins_green)},
+                new int[]{0, ContextCompat.getColor(getContext(), R.color.mapbox_blue)}
         };
 
         for (int i = 0; i < layers.length; i++) {
@@ -267,6 +268,7 @@ public class MapsFragment extends Fragment implements PermissionsListener {
         super.onDestroyView();
         mapView.onDestroy();
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

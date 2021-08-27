@@ -12,10 +12,7 @@
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_baseline_fiber_new_24"
             android:title="@string/menu_news" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+
 
         <item
             android:id="@+id/nav_map"

@@ -21,15 +21,6 @@
         android:theme="@style/Theme.PSafe">
 
         <activity
-            android:name=".ui.maps.MapActivity"
-            android:label="@string/title_activity_map"
-            >
-
-
-
-        </activity>
-
-        <activity
             android:name=".ui.login.SignupActivity"
             android:label="@string/title_activity_signup">
 
