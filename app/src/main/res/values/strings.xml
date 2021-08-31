@@ -67,5 +67,9 @@
     <string name="menu_test_map_fragment">test map</string>
     <string name="menu_help">help</string>
     <string name="help_string">This video is the instruction of PSafe</string>
+    <string name="title_activity_bottom">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>
