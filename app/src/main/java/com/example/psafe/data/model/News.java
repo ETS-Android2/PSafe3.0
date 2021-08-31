@@ -9,14 +9,16 @@ public class News {
     private int like;
     private int dislike;
     private String source;
+    private String image = "image";
 
-    public News(String id, String title, String content, int like, int dislike, String source) {
+    public News(String id, String title, String content, int like, int dislike, String source,String image) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.like = like;
         this.dislike = dislike;
         this.source = source;
+        this.image = image;
     }
     public News(String title) {
         this.id = "id";
@@ -25,6 +27,7 @@ public class News {
         this.like = -11;
         this.dislike = -11;
         this.source = "source";
+        this.image = "image";
     }
 
     public News() {
@@ -34,14 +37,15 @@ public class News {
         this.like = -11;
         this.dislike = -11;
         this.source = "source";
+        this.image = "image";
     }
-    public News(String id, Map<String, Object> map) {
-        this.id = id;
-        this.title = map.get("title").toString();
-        this.content = map.get("content").toString();
-        this.like = Integer.parseInt(map.get("like").toString());
-        this.dislike = Integer.parseInt(map.get("dislike").toString());
-        this.source = map.get("source").toString();
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getId() {

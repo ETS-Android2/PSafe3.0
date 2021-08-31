@@ -61,21 +61,36 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-firestore'
-
-    implementation "com.mapbox.navigation:android:2.0.0-beta.23"
-
-
-
+    implementation 'com.google.firebase:firebase-storage'
 
     implementation ('com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.2'){
         exclude group: 'group_name', module: 'module_name'
     }
 
     implementation "androidx.room:room-runtime:2.3.0"
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
     annotationProcessor "androidx.room:room-compiler:2.3.0"
-
+     // FirebaseUI Storage only
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 
     //mapbox navigation
+
+
+
+
+
+
+
+
+
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+
+    implementation  "pl.droidsonroids.gif:android-gif-drawable:1.2.20"
+
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:4.3.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-places-v7:0.7.0'

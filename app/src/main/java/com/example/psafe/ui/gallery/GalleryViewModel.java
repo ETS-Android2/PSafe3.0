@@ -14,11 +14,13 @@ public class GalleryViewModel extends ViewModel {
 
     private Repository repository;
 
+    public Repository getRepository() {
+        return repository;
+    }
+
+
     public GalleryViewModel() {
         repository = new Repository();
 
-    }
-    ArrayList<News> getAllNews(){
-        return repository.getAllNewsArray1();
     }
 }

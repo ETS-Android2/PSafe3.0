@@ -1,7 +1,9 @@
 package com.example.psafe.ui.maps;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 //import timber.log.Timber;
 
+import static com.example.psafe.R.drawable.baseline_thumb_down_alt_24;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.all;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.division;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.exponential;
@@ -92,7 +95,9 @@ public class MapsFragment extends Fragment implements PermissionsListener {
 
                 mapboxMap = map;
 
-                map.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+
+                map.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
+                    @SuppressLint("UseCompatLoadingForDrawables")
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
 
@@ -103,14 +108,10 @@ public class MapsFragment extends Fragment implements PermissionsListener {
 
                         style.setTransition(new TransitionOptions(0, 0, false));
 
-                        mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-                              -37, 144), 10));
-
                         addClusteredGeoJsonSource(style);
                         style.addImage(
                                 "cross-icon-id",
-                                BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.ic_launcher_background)),
-                                true
+                                BitmapUtils.getBitmapFromDrawable(getContext().getDrawable(baseline_thumb_down_alt_24)),false
                         );
 
                         enableLocationComponent(style);
@@ -125,30 +126,30 @@ public class MapsFragment extends Fragment implements PermissionsListener {
 
     @SuppressWarnings({"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
-// Check if permissions are enabled and if not request
+        // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(getContext())) {
 
-// Get an instance of the component
+            // Get an instance of the component
             LocationComponent locationComponent = mapboxMap.getLocationComponent();
 
-// Activate with options
+            // Activate with options
             locationComponent.activateLocationComponent(
                     LocationComponentActivationOptions.builder(getContext(), loadedMapStyle).build());
 
-// Enable to make component visible
+            // Enable to make component visible
             locationComponent.setLocationComponentEnabled(true);
 
-// Set the component's camera mode
+            // Set the component's camera mode
             locationComponent.setCameraMode(CameraMode.TRACKING);
 
-// Set the component's render mode
+            // Set the component's render mode
             locationComponent.setRenderMode(RenderMode.COMPASS);
         } else {
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(getActivity());
         }
     }
-
+//test
 
     private void addClusteredGeoJsonSource(@NonNull Style loadedMapStyle) {
 
@@ -186,14 +187,16 @@ public class MapsFragment extends Fragment implements PermissionsListener {
                                 stop(7.0, rgb(255, 0, 0))
                         )
                 )
+
+
         );
         unclustered.setFilter(has("mag"));
-        loadedMapStyle.addLayer(unclustered);
+
 
 // Use the earthquakes GeoJSON source to create three layers: One layer for each cluster category.
 // Each point range gets a different fill color.
         int[][] layers = new int[][]{
-                new int[]{50, ContextCompat.getColor(getContext(), R.color.red)},
+                //new int[]{50, ContextCompat.getColor(getContext(), R.color.red)},
                 new int[]{10, ContextCompat.getColor(getContext(), R.color.mapbox_plugins_green)},
                 new int[]{0, ContextCompat.getColor(getContext(), R.color.mapbox_blue)}
         };
@@ -203,7 +206,7 @@ public class MapsFragment extends Fragment implements PermissionsListener {
             CircleLayer circles = new CircleLayer("cluster-" + i, "crash");
             circles.setProperties(
                     circleColor(layers[i][1]),
-                    circleRadius(18f)
+                    circleRadius(15f)
             );
 
             Expression pointCount = toNumber(get("point_count"));
@@ -218,6 +221,8 @@ public class MapsFragment extends Fragment implements PermissionsListener {
                             lt(pointCount, literal(layers[i - 1][0]))
                     )
             );
+
+
             loadedMapStyle.addLayer(circles);
         }
 
@@ -231,6 +236,10 @@ public class MapsFragment extends Fragment implements PermissionsListener {
                 textAllowOverlap(true)
         );
         loadedMapStyle.addLayer(count);
+        Log.v("uncluster",unclustered.getFilter().toString());
+
+
+        loadedMapStyle.addLayer(unclustered);
     }
 
     @Override
@@ -285,3 +294,4 @@ public class MapsFragment extends Fragment implements PermissionsListener {
 
     }
 }
+

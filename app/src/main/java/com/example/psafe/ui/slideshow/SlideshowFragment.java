@@ -32,13 +32,7 @@ public class SlideshowFragment extends Fragment {
         fragmentSlideshowBinding = FragmentSlideshowBinding.inflate(getLayoutInflater());
         View view = fragmentSlideshowBinding.getRoot();
 
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
-        //View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
 
-        fragmentSlideshowBinding.addtodatabase.setOnClickListener(v -> {
-            slideshowViewModel.addToDatabase();
-        });
 
 
 

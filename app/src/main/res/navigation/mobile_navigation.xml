@@ -16,22 +16,21 @@
         android:name="com.example.psafe.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.psafe.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <activity
-        android:id="@+id/mapActivity"
-        android:name="com.example.psafe.ui.maps.MapActivity"
-        android:label="activity_map"
-        tools:layout="@layout/activity_map" />
     <fragment
         android:id="@+id/nav_map"
         android:name="com.example.psafe.ui.maps.MapsFragment"
-        android:label="maps_fragment"
+        android:label="@string/menu_map"
         tools:layout="@layout/maps_fragment" />
+    <fragment
+        android:id="@+id/nav_tips"
+        android:name="com.example.psafe.ui.tips.TipsFragment"
+        android:label="@string/menu_tips"
+        tools:layout="@layout/tips_fragment"/>
+    <fragment
+        android:id="@+id/nav_help"
+        android:name="com.example.psafe.ui.help.HelpFragment"
+        android:label="@string/menu_help"
+        tools:layout="@layout/fragment_help" />
 
 
 </navigation>
