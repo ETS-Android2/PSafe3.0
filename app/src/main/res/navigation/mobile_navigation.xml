@@ -25,12 +25,25 @@
         android:id="@+id/nav_tips"
         android:name="com.example.psafe.ui.tips.TipsFragment"
         android:label="@string/menu_tips"
-        tools:layout="@layout/tips_fragment"/>
+        tools:layout="@layout/tips_fragment">
+        <action
+            android:id="@+id/action_nav_tips_to_dashboardFragment"
+            app:destination="@id/nav_dashboard" />
+    </fragment>
     <fragment
         android:id="@+id/nav_help"
         android:name="com.example.psafe.ui.help.HelpFragment"
         android:label="@string/menu_help"
         tools:layout="@layout/fragment_help" />
+    <fragment
+        android:id="@+id/nav_dashboard"
+        android:name="com.example.psafe.ui.dashboard.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_nav_tips"
+            app:destination="@id/nav_tips" />
+    </fragment>
 
 
 </navigation>
