@@ -103,11 +103,11 @@ public class HomeFragment extends Fragment implements ConnectionCallbacks,
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
 
         //textView = root.findViewById(R.id.text_home);
-        cityField = (TextView)rootView.findViewById(R.id.city_field);
-        updatedField = (TextView)rootView.findViewById(R.id.updated_field);
-        detailsField = (TextView)rootView.findViewById(R.id.details_field);
-        currentTemperatureField = (TextView)rootView.findViewById(R.id.current_temperature_field);
-        weatherIcon = (GifImageView) rootView.findViewById(R.id.weather_icon);
+        cityField = rootView.findViewById(R.id.city_field);
+        updatedField = rootView.findViewById(R.id.updated_field);
+        detailsField = rootView.findViewById(R.id.details_field);
+        currentTemperatureField = rootView.findViewById(R.id.current_temperature_field);
+        weatherIcon = rootView.findViewById(R.id.weather_icon);
         //weatherIcon.setTypeface(weatherFont);
 
         return rootView;

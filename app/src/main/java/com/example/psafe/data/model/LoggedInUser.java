@@ -17,8 +17,8 @@ public class LoggedInUser {
     @PrimaryKey(autoGenerate = true)
     private String userId;
 
-    private String displayName;
-    private String position;
+    private final String displayName;
+    private final String position;
 
     public LoggedInUser()
     {

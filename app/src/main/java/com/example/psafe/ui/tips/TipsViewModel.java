@@ -6,7 +6,7 @@ import com.example.psafe.database.Repository;
 
 public class TipsViewModel extends ViewModel {
     // TODO: Implement the ViewModel
-    private Repository repository;
+    private final Repository repository;
 
     public Repository getRepository() {
         return repository;

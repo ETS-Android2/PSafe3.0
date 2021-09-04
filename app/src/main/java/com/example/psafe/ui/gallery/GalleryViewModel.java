@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class GalleryViewModel extends ViewModel {
 
-    private Repository repository;
+    private final Repository repository;
 
     public Repository getRepository() {
         return repository;

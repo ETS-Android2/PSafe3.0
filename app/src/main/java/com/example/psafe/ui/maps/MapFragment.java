@@ -76,10 +76,10 @@ public class MapFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
 
         Mapbox.getInstance(getContext(), getString(R.string.mapbox_access_token));
+        // Inflate the layout for this fragment
+
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
 
@@ -108,31 +108,31 @@ public class MapFragment extends Fragment implements
 
     @SuppressWarnings( {"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
-// Check if permissions are enabled and if not request
+        // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(getContext())) {
 
-// Enable the most basic pulsing styling by ONLY using
-// the `.pulseEnabled()` method
+            // Enable the most basic pulsing styling by ONLY using
+            // the `.pulseEnabled()` method
             LocationComponentOptions customLocationComponentOptions = LocationComponentOptions.builder(getContext())
                     .pulseEnabled(true)
                     .build();
 
-// Get an instance of the component
+            // Get an instance of the component
             LocationComponent locationComponent = mapboxMap.getLocationComponent();
 
-// Activate with options
+            // Activate with options
             locationComponent.activateLocationComponent(
                     LocationComponentActivationOptions.builder(getContext(), loadedMapStyle)
                             .locationComponentOptions(customLocationComponentOptions)
                             .build());
 
-// Enable to make component visible
+            // Enable to make component visible
             locationComponent.setLocationComponentEnabled(true);
 
-// Set the component's camera mode
+            // Set the component's camera mode
             locationComponent.setCameraMode(CameraMode.TRACKING);
 
-// Set the component's render mode
+            // Set the component's render mode
             locationComponent.setRenderMode(RenderMode.NORMAL);
         } else {
             permissionsManager = new PermissionsManager(this);

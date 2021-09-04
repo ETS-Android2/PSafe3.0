@@ -147,7 +147,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             newsTitle = view.findViewById(R.id.card_title);
             newsContent = view.findViewById(R.id.card_content);
             //newsTitle.setTypeface(Typeface.createFromAsset(new AssetManager(),"");
-            newsImage = (ImageView)view.findViewById(R.id.imageNews);
+            newsImage = view.findViewById(R.id.imageNews);
             rootView = view;
             likeButton = view.findViewById(R.id.button_like);
             dislikeButton = view.findViewById(R.id.button_dislike);
