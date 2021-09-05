@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +21,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.psafe.BottomActivity;
 import com.example.psafe.R;
 import com.example.psafe.data.model.BlankViewModel;
 import com.example.psafe.data.model.News;
@@ -45,12 +49,8 @@ public class GalleryFragment extends Fragment {
     private ArrayList<News> test;
 
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
-
 
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         galleryViewModel =
@@ -59,6 +59,9 @@ public class GalleryFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         test = new ArrayList<>();
+
+
+
 
 
         //layout manager

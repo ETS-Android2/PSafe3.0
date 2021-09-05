@@ -11,6 +11,7 @@ import android.view.View;
 
 import android.widget.Toast;
 
+import com.example.psafe.BottomActivity;
 import com.example.psafe.MainActivity;
 
 
@@ -88,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Toast.makeText(SignupActivity.this, getResources().getString(R.string.login_success) ,Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = fAuth.getCurrentUser();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), BottomActivity.class));
 
                             } else {
                                 // If sign in fails, display a message to the user.

@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.psafe.BottomActivity;
 import com.example.psafe.MainActivity;
 import com.example.psafe.R;
 
@@ -94,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
 
                                     Toast.makeText(LoginActivity.this, "login successfully", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), BottomActivity.class));
                                     finish();
 
 

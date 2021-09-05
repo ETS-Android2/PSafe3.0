@@ -35,12 +35,4 @@
         mapbox:layout_constraintTop_toTopOf="parent"
         mapbox:layout_constraintVertical_bias="0.87" />
 
-    <Button
-        android:id="@+id/navigate_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        mapbox:layout_constraintStart_toStartOf="@+id/mapViewNew"
-        mapbox:layout_constraintTop_toTopOf="@+id/mapViewNew" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

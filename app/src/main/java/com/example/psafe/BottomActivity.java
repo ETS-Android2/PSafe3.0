@@ -24,8 +24,8 @@ public class BottomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
-        getSupportActionBar().hide(); // hide the title bar
+        //requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        //getSupportActionBar().hide(); // hide the title bar
        // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         //   WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         // calling the action bar
@@ -38,7 +38,7 @@ public class BottomActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_map, R.id.nav_help,R.id.nav_dashboard)
+                R.id.nav_home, R.id.nav_navigation, R.id.nav_setting,R.id.nav_dashboard)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
