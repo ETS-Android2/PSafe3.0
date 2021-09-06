@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * main activty
@@ -30,6 +31,8 @@ public class BottomActivity extends AppCompatActivity {
         //   WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         // calling the action bar
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
 
 

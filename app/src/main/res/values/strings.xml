@@ -85,4 +85,11 @@
     <string name="map_input_hint">click to search your destination</string>
     <string name="dashboard_weather">Weather</string>
     <string name="sos_button">Long press to call 000</string>
+    <string name="walk">Walk</string>
+    <string name="bike">bike</string>
+    <string name="car">car</string>
+    <string name="nav_start">START</string>
+    <string name="default_time">default time</string>
+    <string name="default_destination">destination</string>
+    <string name="nav_end">END</string>
 </resources>

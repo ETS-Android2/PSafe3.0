@@ -3,11 +3,13 @@ package com.example.psafe.ui.navigation;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +30,12 @@ import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
 import com.mapbox.mapboxsdk.location.LocationComponentOptions;
 import com.mapbox.mapboxsdk.location.OnCameraTrackingChangedListener;
+import com.mapbox.mapboxsdk.location.OnLocationCameraTransitionListener;
 import com.mapbox.mapboxsdk.location.OnLocationClickListener;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.location.modes.RenderMode;
@@ -40,6 +44,7 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -77,6 +82,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
+import com.mapbox.turf.TurfMeta;
 
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
@@ -127,7 +133,6 @@ public class NavigationFragment extends Fragment implements
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
         Mapbox.getInstance(getContext(), getString(R.string.mapbox_access_token));
         binding = FragmentNavigationBinding.inflate(getLayoutInflater());
 
@@ -137,6 +142,7 @@ public class NavigationFragment extends Fragment implements
         mapView = root.findViewById(R.id.mapViewNew);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+        iniButton();
 
 
         return root;
@@ -219,12 +225,12 @@ public class NavigationFragment extends Fragment implements
      * @param origin      the starting point of the route
      * @param destination the desired finish point of the route
      */
-    private void getRoute(MapboxMap mapboxMap, Point origin, Point destination) {
+    private void getRoute(MapboxMap mapboxMap, Point origin, Point destination, String type) {
         client = MapboxDirections.builder()
                 .origin(origin)
                 .destination(destination)
                 .overview(DirectionsCriteria.OVERVIEW_FULL)
-                .profile(DirectionsCriteria.PROFILE_WALKING)
+                .profile(type)
                 .accessToken(getString(R.string.mapbox_access_token))
                 .build();
 
@@ -465,7 +471,10 @@ public class NavigationFragment extends Fragment implements
 
                     //_________________________
 
+
                     origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLatitude(), locationComponent.getLastKnownLocation().getLatitude());
+
+                    binding.navigationMenu.setVisibility(View.VISIBLE);
                     mapView.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -475,25 +484,199 @@ public class NavigationFragment extends Fragment implements
 
                                     // enableLocationComponent(style);
                                     origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(), locationComponent.getLastKnownLocation().getLatitude());
-
-// Set the destination location to the Plaza del Triunfo in Granada, Spain.
-                                    // destination = Point.fromLngLat(-3.601845, 37.184080);
-
                                     initSource(style);
-
                                     initLayers(style);
-
                                     // Get the directions route from the Mapbox Directions API
-                                    getRoute(mapboxMap, origin, destination);
+                                    getRoute(mapboxMap, origin, destination, DirectionsCriteria.PROFILE_WALKING);
+
+
+                                    // move the camera to fix the route
+
+                                    LatLngBounds latLngBounds = new LatLngBounds.Builder()
+                                            .include(new LatLng(origin.latitude(),origin.longitude())) // orange
+                                            .include(new LatLng(destination.latitude(),destination.longitude())) // destination
+                                            .build();
+
+
+                                    binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24_purple);
+                                    binding.carButton.setImageResource(R.drawable.ic_baseline_directions_car_24);
+                                    binding.bikeButton.setImageResource(R.drawable.ic_baseline_directions_bike_24);
+
+
+                                    mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50), 1000);
+
+
                                 }
                             });
                         }
                     });
-                    //  });
+
+                    //bike
+                    binding.bikeButton.setOnClickListener(v->{
+                        mapView.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(@NonNull MapboxMap mapboxMap) {
+                                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                                    @Override
+                                    public void onStyleLoaded(@NonNull Style style) {
+
+                                        // enableLocationComponent(style);
+                                        origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(), locationComponent.getLastKnownLocation().getLatitude());
+                                        initSource(style);
+                                        initLayers(style);
+                                        // Get the directions route from the Mapbox Directions API
+                                        getRoute(mapboxMap, origin, destination, DirectionsCriteria.PROFILE_CYCLING);
+
+                                        // move the camera to fix the route
+
+                                        LatLngBounds latLngBounds = new LatLngBounds.Builder()
+                                                .include(new LatLng(origin.latitude(),origin.longitude())) // orange
+                                                .include(new LatLng(destination.latitude(),destination.longitude())) // destination
+                                                .build();
+
+                                        binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24);
+                                        binding.carButton.setImageResource(R.drawable.ic_baseline_directions_car_24);
+                                        binding.bikeButton.setImageResource(R.drawable.ic_baseline_directions_bike_24_purple);
+
+                                        mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50), 1000);
+
+
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+
+
+                    //walk
+                    binding.walkButton.setOnClickListener(v->{
+                        mapView.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(@NonNull MapboxMap mapboxMap) {
+                                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                                    @Override
+                                    public void onStyleLoaded(@NonNull Style style) {
+
+                                        // enableLocationComponent(style);
+                                        origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(), locationComponent.getLastKnownLocation().getLatitude());
+                                        initSource(style);
+                                        initLayers(style);
+                                        // Get the directions route from the Mapbox Directions API
+                                        getRoute(mapboxMap, origin, destination, DirectionsCriteria.PROFILE_WALKING);
+
+                                        // move the camera to fix the route
+
+                                        LatLngBounds latLngBounds = new LatLngBounds.Builder()
+                                                .include(new LatLng(origin.latitude(),origin.longitude())) // orange
+                                                .include(new LatLng(destination.latitude(),destination.longitude())) // destination
+                                                .build();
+
+                                        binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24_purple);
+                                        binding.carButton.setImageResource(R.drawable.ic_baseline_directions_car_24);
+                                        binding.bikeButton.setImageResource(R.drawable.ic_baseline_directions_bike_24);
+
+                                        mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50), 1000);
+
+
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+
+
+
+                    //car
+                    binding.carButton.setOnClickListener(v->{
+                        mapView.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(@NonNull MapboxMap mapboxMap) {
+                                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                                    @Override
+                                    public void onStyleLoaded(@NonNull Style style) {
+
+                                        // enableLocationComponent(style);
+                                        origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(), locationComponent.getLastKnownLocation().getLatitude());
+                                        initSource(style);
+                                        initLayers(style);
+                                        // Get the directions route from the Mapbox Directions API
+                                        getRoute(mapboxMap, origin, destination, DirectionsCriteria.PROFILE_DRIVING);
+
+                                        // move the camera to fix the route
+
+                                        LatLngBounds latLngBounds = new LatLngBounds.Builder()
+                                                .include(new LatLng(origin.latitude(),origin.longitude())) // orange
+                                                .include(new LatLng(destination.latitude(),destination.longitude())) // destination
+                                                .build();
+
+                                        binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24);
+                                        binding.carButton.setImageResource(R.drawable.ic_baseline_directions_car_24_purple);
+                                        binding.bikeButton.setImageResource(R.drawable.ic_baseline_directions_bike_24);
+
+                                        mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50), 1000);
+
+
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+
+                    binding.startNavButton.setOnClickListener(v -> {
+                        setCameraTrackingMode(CameraMode.TRACKING);
+                        binding.navigationMenu.setVisibility(View.GONE);
+                        binding.navMenu2.setVisibility(View.VISIBLE);
+                        binding.testCardButton.setVisibility(View.GONE);
+                    });
+
+
+
+                    binding.helpNavButton.setOnLongClickListener(v -> {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:000"));
+                        startActivity(intent);
+                        return true;
+                    });
+
+                    binding.endNavButton.setOnClickListener(v->{
+                        NavigationFragment fragmentInstance= new NavigationFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction().remove(fragmentInstance).commit();
+
+                    });
+
+
+
+
+
+
+
+
+
+
+
+
+
                 }
             }
         }
     }
+
+
+
+    private void iniButton()
+    {
+        binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24);
+        binding.carButton.setImageResource(R.drawable.ic_baseline_directions_car_24_purple);
+        binding.bikeButton.setImageResource(R.drawable.ic_baseline_directions_bike_24);
+       // setCameraTrackingMode(CameraMode.NONE);
+        binding.navigationMenu.setVisibility(View.GONE);
+        binding.navMenu2.setVisibility(View.GONE);
+        binding.testCardButton.setVisibility(View.VISIBLE);
+    }
+
 
     //---------------------------------------------------------------------------------------------------------
     @Override
@@ -546,6 +729,36 @@ public class NavigationFragment extends Fragment implements
         super.onLowMemory();
         mapView.onLowMemory();
     }
+
+    private void setCameraTrackingMode(@CameraMode.Mode int mode) {
+        locationComponent.setCameraMode(mode, new OnLocationCameraTransitionListener() {
+            @Override
+            public void onLocationCameraTransitionFinished(@CameraMode.Mode int cameraMode) {
+                if (mode != CameraMode.NONE) {
+                    locationComponent.zoomWhileTracking(15, 750, new MapboxMap.CancelableCallback() {
+                        @Override
+                        public void onCancel() {
+// No impl
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            locationComponent.tiltWhileTracking(45);
+                        }
+                    });
+                } else {
+                    mapboxMap.easeCamera(CameraUpdateFactory.tiltTo(0));
+                }
+            }
+
+            @Override
+            public void onLocationCameraTransitionCanceled(@CameraMode.Mode int cameraMode) {
+// No impl
+            }
+        });
+    }
+
+
 
 
 }

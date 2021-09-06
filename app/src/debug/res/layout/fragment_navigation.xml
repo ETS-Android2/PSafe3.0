@@ -6,20 +6,171 @@
     android:layout_height="match_parent"
     tools:context=".ui.navigation.NavigationFragment">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/nav_menu_2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        mapbox:layout_constraintBottom_toTopOf="@+id/navigation_menu" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/destination_text"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:fontFamily="@font/handwritting2"
+                android:text="@string/default_destination"
+                android:textSize="16dp"
+
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintStart_toStartOf="parent"
+                mapbox:layout_constraintTop_toTopOf="parent"
+                mapbox:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/navigation_time1"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:fontFamily="@font/handwritting2"
+                android:text="@string/default_time"
+                android:textSize="16dp"
+
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintStart_toStartOf="parent"
+                mapbox:layout_constraintTop_toBottomOf="@+id/destination_text"
+                mapbox:layout_constraintVertical_bias="0.25" />
+
+            <Button
+                android:id="@+id/end_nav_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:shadowColor="@color/Psafe_purple"
+                android:text="@string/nav_end"
+                android:textColor="@color/Psafe_purple"
+                android:fontFamily="@font/handwritting2"
+
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintHorizontal_bias="0.926"
+                mapbox:layout_constraintStart_toEndOf="@+id/destination_text"
+                mapbox:layout_constraintTop_toTopOf="parent"
+                mapbox:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/help_nav_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:shadowColor="@color/Psafe_purple"
+                android:text="@string/sos_button"
+                android:textColor="@color/Psafe_purple"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                android:fontFamily="@font/handwritting2"
+
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintHorizontal_bias="0.847"
+                mapbox:layout_constraintStart_toEndOf="@+id/destination_text"
+                mapbox:layout_constraintTop_toBottomOf="@id/end_nav_button"
+                mapbox:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/navigation_menu"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/walk_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_directions_walk_24"
+                mapbox:layout_constraintStart_toStartOf="parent"
+                mapbox:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/bike_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_directions_bike_24"
+                android:backgroundTint="@color/white"
+                mapbox:layout_constraintStart_toEndOf="@+id/walk_button"
+                mapbox:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/car_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car"
+                android:src="@drawable/ic_baseline_directions_car_24"
+                android:backgroundTint="@color/white"
+                mapbox:layout_constraintStart_toEndOf="@+id/bike_button"
+                mapbox:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/navigation_time"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:fontFamily="@font/handwritting2"
+                android:text="@string/default_time"
+                android:textSize="16dp"
+
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintStart_toStartOf="parent"
+                mapbox:layout_constraintTop_toBottomOf="@+id/walk_button"
+                mapbox:layout_constraintVertical_bias="0.322" />
+
+            <Button
+                android:id="@+id/start_nav_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:shadowColor="@color/Psafe_purple"
+                android:text="@string/nav_start"
+                android:fontFamily="@font/handwritting2"
+                android:textColor="@color/Psafe_purple"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintHorizontal_bias="0.902"
+                mapbox:layout_constraintStart_toEndOf="@+id/car_button"
+                mapbox:layout_constraintTop_toTopOf="parent"
+                mapbox:layout_constraintVertical_bias="0.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapViewNew"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintBottom_toTopOf="@+id/nav_menu_2"
         mapbox:layout_constraintEnd_toEndOf="parent"
         mapbox:layout_constraintHorizontal_bias="0.0"
         mapbox:layout_constraintStart_toStartOf="parent"
         mapbox:layout_constraintTop_toTopOf="parent"
         mapbox:layout_constraintVertical_bias="0.0"
-        mapbox:mapbox_cameraTargetLat="37.1792"
-        mapbox:mapbox_cameraTargetLng="-3.5953"
         mapbox:mapbox_cameraZoom="14">
-
 
     </com.mapbox.mapboxsdk.maps.MapView>
 
@@ -58,6 +209,7 @@
 
             android:layout_marginLeft="11dp"
             android:src="@drawable/ic_baseline_search_24" />
+
     </androidx.cardview.widget.CardView>
 
 
