@@ -64,10 +64,6 @@ public class DashboardFragment extends Fragment {
             navController.navigate(R.id.action_nav_dashboard_to_nav_weather);
         });
 
-        fragmentDashboardBinding.testCardButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_nav_dashboard_to_nav_weather);
-        });
     }
 
     @Override
