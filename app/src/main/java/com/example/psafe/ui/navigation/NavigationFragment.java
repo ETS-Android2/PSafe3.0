@@ -1,5 +1,6 @@
 package com.example.psafe.ui.navigation;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -13,12 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.psafe.R;
+
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.example.psafe.databinding.FragmentDashboardBinding;
+import com.example.psafe.databinding.FragmentNavigationBinding;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 
@@ -36,6 +41,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
 import java.util.List;
+
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.MapboxDirections;
@@ -85,7 +91,9 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineJoin;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
 
 public class NavigationFragment extends Fragment implements
-        OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener{
+        OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener {
+
+    private FragmentNavigationBinding binding;
 
     private NavigationViewModel mViewModel;
     private static final String ROUTE_LAYER_ID = "route-layer-id";
@@ -120,16 +128,15 @@ public class NavigationFragment extends Fragment implements
                              @Nullable Bundle savedInstanceState) {
 
 
-
         Mapbox.getInstance(getContext(), getString(R.string.mapbox_access_token));
-        View root = inflater.inflate(R.layout.fragment_navigation, container, false);
-        // This contains the MapView in XML and needs to be called after the access token is configured.
+        binding = FragmentNavigationBinding.inflate(getLayoutInflater());
 
+        View root = binding.getRoot();
+        // This contains the MapView in XML and needs to be called after the access token is configured.
         // Setup the MapView
         mapView = root.findViewById(R.id.mapViewNew);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-
 
 
         return root;
@@ -146,7 +153,7 @@ public class NavigationFragment extends Fragment implements
 
                 // Add the symbol layer icon to map for future use
                 style.addImage(symbolIconId, BitmapFactory.decodeResource(
-                       getContext().getResources(), R.drawable.red_marker));
+                        getContext().getResources(), R.drawable.red_marker));
 
                 // Create an empty GeoJSON source using the empty feature collection
                 setUpSource(style);
@@ -170,7 +177,7 @@ public class NavigationFragment extends Fragment implements
     private void initSource(@NonNull Style loadedMapStyle) {
         loadedMapStyle.addSource(new GeoJsonSource(ROUTE_SOURCE_ID));
 
-        GeoJsonSource iconGeoJsonSource = new GeoJsonSource(ICON_SOURCE_ID, FeatureCollection.fromFeatures(new Feature[] {
+        GeoJsonSource iconGeoJsonSource = new GeoJsonSource(ICON_SOURCE_ID, FeatureCollection.fromFeatures(new Feature[]{
                 Feature.fromGeometry(Point.fromLngLat(origin.longitude(), origin.latitude())),
                 Feature.fromGeometry(Point.fromLngLat(destination.longitude(), destination.latitude()))}));
         loadedMapStyle.addSource(iconGeoJsonSource);
@@ -201,13 +208,14 @@ public class NavigationFragment extends Fragment implements
                 iconImage(RED_PIN_ICON_ID),
                 iconIgnorePlacement(true),
                 iconAllowOverlap(true),
-                iconOffset(new Float[] {0f, 0f})));
+                iconOffset(new Float[]{0f, 0f})));
     }
 
     /**
      * Make a request to the Mapbox Directions API. Once successful, pass the route to the
      * route layer.
-     * @param mapboxMap the Mapbox map object that the route will be drawn on
+     *
+     * @param mapboxMap   the Mapbox map object that the route will be drawn on
      * @param origin      the starting point of the route
      * @param destination the desired finish point of the route
      */
@@ -226,7 +234,7 @@ public class NavigationFragment extends Fragment implements
                 // You can get the generic HTTP info about the response
                 //Timber.d("Response code: " + response.code());
                 if (response.body() == null) {
-                   // Timber.e("No routes found, make sure you set the right user and access token.");
+                    // Timber.e("No routes found, make sure you set the right user and access token.");
                     return;
                 } else if (response.body().routes().size() < 1) {
                     //Timber.e("No routes found");
@@ -269,7 +277,7 @@ public class NavigationFragment extends Fragment implements
 
 //------------------------------CURRENT LOCATION------------------------------------------------------------
 
-    @SuppressWarnings( {"MissingPermission"})
+    @SuppressWarnings({"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
         // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(getContext())) {
@@ -331,7 +339,7 @@ public class NavigationFragment extends Fragment implements
     }
 
 
-    @SuppressWarnings( {"MissingPermission"})
+    @SuppressWarnings({"MissingPermission"})
     @Override
     public void onLocationComponentClick() {
         if (locationComponent.getLastKnownLocation() != null) {
@@ -379,7 +387,7 @@ public class NavigationFragment extends Fragment implements
 //-----------------------------------------------------------SEARCH--------------------------------------
 
     private void initSearchFab() {
-        getView().findViewById(R.id.fab_location_search).setOnClickListener(new View.OnClickListener() {
+        getView().findViewById(R.id.map_input).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new PlaceAutocomplete.IntentBuilder()
@@ -419,7 +427,7 @@ public class NavigationFragment extends Fragment implements
     private void setupLayer(@NonNull Style loadedMapStyle) {
         loadedMapStyle.addLayer(new SymbolLayer("SYMBOL_LAYER_ID", geojsonSourceLayerId).withProperties(
                 iconImage(symbolIconId),
-                iconOffset(new Float[] {0f, -8f})
+                iconOffset(new Float[]{0f, -8f})
         ));
     }
 
@@ -430,6 +438,7 @@ public class NavigationFragment extends Fragment implements
 
 // Retrieve selected location's CarmenFeature
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
+            binding.mapInput.setText(selectedCarmenFeature.text());
 
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon
@@ -440,7 +449,7 @@ public class NavigationFragment extends Fragment implements
                     GeoJsonSource source = style.getSourceAs(geojsonSourceLayerId);
                     if (source != null) {
                         source.setGeoJson(FeatureCollection.fromFeatures(
-                                new Feature[] {Feature.fromJson(selectedCarmenFeature.toJson())}));
+                                new Feature[]{Feature.fromJson(selectedCarmenFeature.toJson())}));
                     }
 
 // Move map camera to the selected location
@@ -454,60 +463,60 @@ public class NavigationFragment extends Fragment implements
                     this.destination = (Point) selectedCarmenFeature.geometry();
                     //Button navigate_button = getView().findViewById(R.id.navigate_button);
 
-                    //__________________________
-                    //navigate_button.setOnClickListener(v->{
-                        // Set the origin location to the Alhambra landmark in Granada, Spain.
-                        //origin = Point.fromLngLat(-10.588098, 55.176164);
-                        origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLatitude(),locationComponent.getLastKnownLocation().getLatitude());
+                    //_________________________
 
-                        // Set the destination location to the Plaza del Triunfo in Granada, Spain.
-                        //destination = Point.fromLngLat(-3.601845, 55.184080);
-                        mapView.getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
-                                    @Override
-                                    public void onStyleLoaded(@NonNull Style style) {
+                    origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLatitude(), locationComponent.getLastKnownLocation().getLatitude());
+                    mapView.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(@NonNull MapboxMap mapboxMap) {
+                            mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                                @Override
+                                public void onStyleLoaded(@NonNull Style style) {
 
-                                        // enableLocationComponent(style);
-                                        origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(), locationComponent.getLastKnownLocation().getLatitude());
+                                    // enableLocationComponent(style);
+                                    origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(), locationComponent.getLastKnownLocation().getLatitude());
 
 // Set the destination location to the Plaza del Triunfo in Granada, Spain.
-                                        // destination = Point.fromLngLat(-3.601845, 37.184080);
+                                    // destination = Point.fromLngLat(-3.601845, 37.184080);
 
-                                        initSource(style);
+                                    initSource(style);
 
-                                        initLayers(style);
+                                    initLayers(style);
 
-                                        // Get the directions route from the Mapbox Directions API
-                                        getRoute(mapboxMap, origin, destination);
-                                    }
-                                });
-                            }
-                        });
-                  //  });
+                                    // Get the directions route from the Mapbox Directions API
+                                    getRoute(mapboxMap, origin, destination);
+                                }
+                            });
+                        }
+                    });
+                    //  });
                 }
             }
         }
     }
-//---------------------------------------------------------------------------------------------------------
+
+    //---------------------------------------------------------------------------------------------------------
     @Override
     public void onResume() {
         super.onResume();
         mapView.onResume();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
-    @SuppressWarnings( {"MissingPermission"})
+    @SuppressWarnings({"MissingPermission"})
     @Override
     public void onStart() {
         super.onStart();
         mapView.onStart();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
+
 
     @Override
     public void onStop() {
         super.onStop();
         mapView.onStop();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
     @Override

@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_nav_dashboard_to_nav_gallery"
             app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_weather"
+            app:destination="@id/nav_weather" />
     </fragment>
     <fragment
         android:id="@+id/nav_navigation"
@@ -67,6 +70,15 @@
         <action
             android:id="@+id/action_nav_setting_to_nav_help"
             app:destination="@id/nav_help" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_weather"
+        android:name="com.example.psafe.ui.weather.WeatherFragment"
+        android:label="fragment_weather"
+        tools:layout="@layout/fragment_weather" >
+        <action
+            android:id="@+id/action_nav_weather_to_nav_dashboard"
+            app:destination="@id/nav_dashboard" />
     </fragment>
 
 

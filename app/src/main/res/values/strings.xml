@@ -80,6 +80,9 @@
     <string name="menu_setting">Setting</string>
     <string name="advanced_notification">Notification</string>
     <string name="advanced_alert_off">Alert off</string>
-    <string name="advanced_alert_on" >Alert on</string>
-    <string name="advanced_alert" >Alert </string>
+    <string name="advanced_alert_on">Alert on</string>
+    <string name="advanced_alert">Alert </string>
+    <string name="map_input_hint">click to search your destination</string>
+    <string name="dashboard_weather">Weather</string>
+    <string name="sos_button">Long press to call 000</string>
 </resources>

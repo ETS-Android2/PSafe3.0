@@ -23,16 +23,42 @@
 
     </com.mapbox.mapboxsdk.maps.MapView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_location_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@color/Psafe_purple"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/test_card_button"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="40dp"
+        mapbox:cardCornerRadius="@dimen/dashboard_radius"
+
         mapbox:layout_constraintBottom_toBottomOf="parent"
         mapbox:layout_constraintEnd_toEndOf="parent"
-        mapbox:layout_constraintHorizontal_bias="0.91"
         mapbox:layout_constraintStart_toStartOf="parent"
+
         mapbox:layout_constraintTop_toTopOf="parent"
-        mapbox:layout_constraintVertical_bias="0.87" />
+        mapbox:layout_constraintVertical_bias="0.050000012">
+
+        <TextView
+            android:id="@+id/map_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/handwritting2"
+            android:gravity="center"
+            android:hint="@string/map_input_hint"
+
+            android:textSize="15dp" />
+
+        <ImageView
+            android:id="@+id/search_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginLeft="11dp"
+            android:src="@drawable/ic_baseline_search_24" />
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
