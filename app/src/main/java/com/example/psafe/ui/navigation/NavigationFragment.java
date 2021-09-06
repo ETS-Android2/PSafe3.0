@@ -445,6 +445,7 @@ public class NavigationFragment extends Fragment implements
 // Retrieve selected location's CarmenFeature
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
             binding.mapInput.setText(selectedCarmenFeature.text());
+            binding.destinationText.setText(selectedCarmenFeature.text());
 
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon

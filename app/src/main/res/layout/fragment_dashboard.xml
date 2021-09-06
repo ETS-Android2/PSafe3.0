@@ -8,58 +8,48 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
     <Button
+
         android:id="@+id/dashboard_visualize_button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:radius="@dimen/dashboard_radius"
         android:text="@string/dashboard_visualization"
-
-        app:layout_constraintBottom_toTopOf="@+id/guideline9"
-        app:layout_constraintEnd_toStartOf="@id/guideline12"
+        app:icon="@drawable/ic_baseline_bar_chart_24"
+        app:iconGravity="textTop"
+android:fontFamily="@font/handwritting2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+
         android:id="@+id/dashboard_news_button"
-        style="@style/Widget.AppCompat.Button"
+        app:icon="@drawable/outline_article_24"
+        app:iconGravity="textTop"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-
-
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:fontFamily="@font/handwritting2"
+
         android:text="@string/dashboard_news"
-        app:cornerRadius="@dimen/activity_horizontal_margin"
-        app:layout_constraintBottom_toTopOf="@+id/guideline11"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+        app:layout_constraintTop_toBottomOf="@+id/dashboard_visualize_button" />
 
     <Button
         android:id="@+id/dashboard_tips_button"
-        android:text="@string/dashboard_tips"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintCircleRadius="@dimen/dashboard_radius"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline11"
+        app:icon="@drawable/ic_baseline_tips_and_updates_24"
+        app:iconGravity="textTop"
+        android:fontFamily="@font/handwritting2"
+
+
+        android:text="@string/dashboard_tips"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline12"
-        app:layout_constraintTop_toTopOf="@+id/guideline9" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dashboard_news_button" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline13"
@@ -67,23 +57,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.9" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.50" />
 
     <Button
+
         android:id="@+id/dashboard_weather_button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        app:icon="@drawable/ic_baseline_wb_sunny_24"
+        app:iconGravity="textTop"
         android:text="@string/dashboard_weather"
-        app:layout_constraintBottom_toTopOf="@id/guideline9"
-        app:layout_constraintCircleRadius="@dimen/dashboard_radius"
+        android:fontFamily="@font/handwritting2"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline12"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dashboard_tips_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

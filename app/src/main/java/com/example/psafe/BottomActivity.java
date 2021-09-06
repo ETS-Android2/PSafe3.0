@@ -25,11 +25,6 @@ public class BottomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
-        //getSupportActionBar().hide(); // hide the title bar
-       // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        //   WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        // calling the action bar
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -47,6 +42,9 @@ public class BottomActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        getSupportActionBar().hide();
+
 
     }
 

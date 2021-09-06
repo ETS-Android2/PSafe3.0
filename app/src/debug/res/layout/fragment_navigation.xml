@@ -10,7 +10,8 @@
         android:id="@+id/nav_menu_2"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        mapbox:layout_constraintBottom_toTopOf="@+id/navigation_menu" >
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintTop_toBottomOf="@id/barrier2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,10 +53,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
+                android:fontFamily="@font/handwritting2"
                 android:shadowColor="@color/Psafe_purple"
                 android:text="@string/nav_end"
                 android:textColor="@color/Psafe_purple"
-                android:fontFamily="@font/handwritting2"
 
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintEnd_toEndOf="parent"
@@ -69,11 +70,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
+                android:fontFamily="@font/handwritting2"
                 android:shadowColor="@color/Psafe_purple"
                 android:text="@string/sos_button"
                 android:textColor="@color/Psafe_purple"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
-                android:fontFamily="@font/handwritting2"
 
                 mapbox:layout_constraintEnd_toEndOf="parent"
                 mapbox:layout_constraintHorizontal_bias="0.847"
@@ -87,8 +88,9 @@
         android:id="@+id/navigation_menu"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:visibility="visible"
         mapbox:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="visible">
+        mapbox:layout_constraintTop_toBottomOf="@id/barrier2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -108,8 +110,8 @@
                 android:id="@+id/bike_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_directions_bike_24"
                 android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_directions_bike_24"
                 mapbox:layout_constraintStart_toEndOf="@+id/walk_button"
                 mapbox:layout_constraintTop_toTopOf="parent" />
 
@@ -117,12 +119,11 @@
                 android:id="@+id/car_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/car"
-                android:src="@drawable/ic_baseline_directions_car_24"
                 android:backgroundTint="@color/white"
+                android:src="@drawable/ic_baseline_directions_car_24"
+                android:text="@string/car"
                 mapbox:layout_constraintStart_toEndOf="@+id/bike_button"
-                mapbox:layout_constraintTop_toTopOf="parent"
-                />
+                mapbox:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/navigation_time"
@@ -144,9 +145,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
+                android:fontFamily="@font/handwritting2"
                 android:shadowColor="@color/Psafe_purple"
                 android:text="@string/nav_start"
-                android:fontFamily="@font/handwritting2"
                 android:textColor="@color/Psafe_purple"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +165,7 @@
         android:id="@+id/mapViewNew"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        mapbox:layout_constraintBottom_toTopOf="@+id/nav_menu_2"
+        mapbox:layout_constraintBottom_toTopOf="@+id/barrier2"
         mapbox:layout_constraintEnd_toEndOf="parent"
         mapbox:layout_constraintHorizontal_bias="0.0"
         mapbox:layout_constraintStart_toStartOf="parent"
@@ -211,6 +212,12 @@
             android:src="@drawable/ic_baseline_search_24" />
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        mapbox:barrierDirection="top" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
