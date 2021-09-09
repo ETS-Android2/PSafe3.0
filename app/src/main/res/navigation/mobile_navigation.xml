@@ -62,7 +62,11 @@
         android:id="@+id/nav_navigation"
         android:name="com.example.psafe.ui.navigation.NavigationFragment"
         android:label="@string/menu_map"
-        tools:layout="@layout/fragment_navigation" />
+        tools:layout="@layout/fragment_navigation" >
+        <action
+            android:id="@+id/action_nav_navigation_to_safeFragment"
+            app:destination="@id/safeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_setting"
         android:name="com.example.psafe.ui.setting.SettingsFragment"
@@ -79,6 +83,15 @@
         <action
             android:id="@+id/action_nav_weather_to_nav_dashboard"
             app:destination="@id/nav_dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/safeFragment"
+        android:name="com.example.psafe.ui.SafeFragment"
+        android:label="fragment_safe"
+        tools:layout="@layout/fragment_safe" >
+        <action
+            android:id="@+id/action_safeFragment_to_nav_navigation"
+            app:destination="@id/nav_navigation" />
     </fragment>
 
 

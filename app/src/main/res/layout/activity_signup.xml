@@ -23,7 +23,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline5"
-        android:fontFamily="@font/square"
+        android:fontFamily="@font/handwritting2"
         />
 
     <EditText
@@ -40,7 +40,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline6"
-        android:fontFamily="@font/square"
+        android:fontFamily="@font/handwritting2"
         />
 
 
@@ -119,7 +119,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
-        android:fontFamily="@font/square"
+        android:fontFamily="@font/handwritting2"
         />
 
     <Button
@@ -131,7 +131,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline10"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
-        android:fontFamily="@font/square"
+        android:fontFamily="@font/handwritting2"
         />
 
     <androidx.constraintlayout.widget.Guideline

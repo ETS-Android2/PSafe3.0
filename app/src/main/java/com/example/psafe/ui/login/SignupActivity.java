@@ -55,7 +55,7 @@ public class SignupActivity extends AppCompatActivity {
 
         if(fAuth.getCurrentUser() != null)
         {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), BottomActivity.class));
             finish();
         }
 

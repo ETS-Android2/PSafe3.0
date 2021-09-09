@@ -31,7 +31,7 @@
                 android:layout_marginTop="32dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:fontFamily="@font/square"
+                android:fontFamily="@font/handwritting2"
                 android:textStyle="bold"
 
                 android:text="@string/menu_news"
@@ -52,7 +52,9 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="@string/menu_news"
-                android:fontFamily="@font/square"
+                android:visibility="gone"
+                android:fontFamily="@font/handwritting2"
+
 
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -66,15 +68,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
 
+                android:background="@color/white"
+                android:src="@drawable/baseline_thumb_up_off_alt_24"
                 android:text="@string/like"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.743"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card_content"
-                app:layout_constraintVertical_bias="0.0"
-                android:src="@drawable/baseline_thumb_up_off_alt_24"
-                android:background="@color/white"/>
+                app:layout_constraintVertical_bias="0.0" />
 
             <pl.droidsonroids.gif.GifImageButton
                 android:id="@+id/button_dislike"
@@ -86,8 +88,10 @@
                 android:text="@string/dislike"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.506"
                 app:layout_constraintStart_toEndOf="@+id/button_like"
-                app:layout_constraintTop_toBottomOf="@+id/card_content" />
+                app:layout_constraintTop_toBottomOf="@+id/card_content"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/imageNews"
@@ -98,6 +102,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card_title"
                 tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/detail_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_keyboard_double_arrow_down_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_content" />
+            <ImageButton
+                android:id="@+id/detail_button_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_keyboard_double_arrow_up_24"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_content" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

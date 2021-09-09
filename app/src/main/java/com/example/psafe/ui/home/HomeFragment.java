@@ -22,10 +22,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psafe.R;
+import com.example.psafe.data.model.Selfsaving;
+import com.example.psafe.data.model.Tips;
 import com.example.psafe.retrofit.SearchResponse;
 import com.example.psafe.retrofit.Weather;
+import com.example.psafe.ui.tips.TipRecyclerViewAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -39,6 +44,9 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
@@ -53,6 +61,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -61,6 +70,13 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private Button sos_button;
+    private RecyclerView recyclerView;
+    private ArrayList<Selfsaving> test;
+    private RecyclerView.Adapter homeAdapter;
+    private TextView scrollingText;
+
+    private RecyclerView.LayoutManager homeLayoutManager;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -70,6 +86,8 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         sos_button = rootView.findViewById(R.id.SOS_button);
+        scrollingText = rootView.findViewById(R.id.home_text1);
+        scrollingText.setSelected(true);
 
 
         sos_button.setOnLongClickListener(v -> {
@@ -79,6 +97,42 @@ public class HomeFragment extends Fragment {
             return true;
         });
 
+
+
+        recyclerView = rootView.findViewById(R.id.HomeRecyclerView);
+        recyclerView.setHasFixedSize(true);
+
+        test = new ArrayList<>();
+
+
+        //layout manager
+        homeLayoutManager = new LinearLayoutManager(getContext());
+        //recyclerView.setLayoutManager(homeLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+
+        homeAdapter = new HomeRecyclerViewAdapter(getContext(),test);
+        //Log.d(TAG,galleryViewModel.getAllNews().get(0).getId());
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    test.add(child.getValue(Selfsaving.class));
+                }
+                homeAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+               // Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        homeViewModel.getRepository().getmDatabase().child("selfSaving").orderByChild("id").addValueEventListener(postListener);
+
+        recyclerView.setAdapter(homeAdapter);
 
         return rootView;
     }

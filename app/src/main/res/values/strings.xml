@@ -92,4 +92,9 @@
     <string name="default_time">default time</string>
     <string name="default_destination">destination</string>
     <string name="nav_end">END</string>
+    <string name="safe_text">Glad you are safe</string>
+    <string name="detail_button">detail</string>
+    <string name="setting_privacy">Privacy</string>
+    <string name="home_text_2">Tips: 6 steps when you get hit by a car</string>
+    <string name="home_text_1">PSAFE--Keep you safe on the road!</string>
 </resources>

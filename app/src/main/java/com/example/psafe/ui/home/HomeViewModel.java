@@ -4,16 +4,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.psafe.database.Repository;
+
 public class HomeViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final Repository repository;
 
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("FIRST LOOK LEFT; THEN LOOK RIGHT!");
+    public Repository getRepository() {
+        return repository;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+
+    public HomeViewModel() {
+        repository = new Repository();
+
     }
 }

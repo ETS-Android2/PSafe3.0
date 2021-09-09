@@ -98,6 +98,20 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
                 view.findViewById(R.id.button_like).setBackgroundResource(R.color.white);
 
             }
+            @Override
+            public void onDetail(int p) {
+                // Implement your functionality for onDelete here
+                view.findViewById(R.id.card_content).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.detail_button).setVisibility(View.GONE);
+                view.findViewById(R.id.detail_button_up).setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onDetailUp(int p) {
+                // Implement your functionality for onDelete here
+                view.findViewById(R.id.card_content).setVisibility(View.GONE);
+                view.findViewById(R.id.detail_button).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.detail_button_up).setVisibility(View.GONE);
+            }
         });
 
         return holder;
@@ -114,14 +128,12 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         //holder.dislikeButton.setImageResource(R.drawable.ic_baseline_thumb_up_no_24);
         holder.newsTitle.setText(oneNews.getTitle());
         holder.newsContent.setText(oneNews.getContent());
-        Log.v(TAG,oneNews.getImage());
         // Download directly from StorageReference using Glide
 // (See MyAppGlideModule for Loader registration)
         Glide.with(context /* context */)
                 .load(storageReference)
                 .into(holder.newsImage);
 
-        Log.d(TAG, oneNews.getTitle());
     }
 
     @Override
@@ -136,7 +148,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         View rootView;
         ImageButton likeButton;
         ImageButton dislikeButton;
-
         MyClickListener listener;
 
 
@@ -155,6 +166,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             this.listener = listener;
             likeButton.setOnClickListener(this);
             dislikeButton.setOnClickListener(this);
+            view.findViewById(R.id.detail_button).setOnClickListener(this);
+            view.findViewById(R.id.detail_button_up).setOnClickListener(this);
 
         }
         @Override
@@ -166,6 +179,12 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
                 case R.id.button_dislike:
                     listener.onDislike(this.getLayoutPosition());
                     break;
+                case R.id.detail_button:
+                    listener.onDetail(this.getLayoutPosition());
+                    break;
+                case R.id.detail_button_up:
+                    listener.onDetailUp(this.getLayoutPosition());
+                    break;
                 default:
                     break;
             }
@@ -174,5 +193,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public interface MyClickListener {
         void onLike(int p);
         void onDislike(int p);
+        void onDetail(int p);
+        void onDetailUp(int p);
     }
 }

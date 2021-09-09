@@ -7,14 +7,6 @@
             app:title="@string/signature_title"
             app:useSimpleSummaryProvider="true" />
 
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
-
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/sync_header">
@@ -29,6 +21,10 @@
             app:summaryOff="@string/advanced_alert_off"
             app:summaryOn="@string/advanced_alert_on"
             app:title="@string/advanced_alert" />
+        <EditTextPreference
+            app:key="@string/setting_privacy"
+            app:title="@string/setting_privacy"/>
+
 
     </PreferenceCategory>
 

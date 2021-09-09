@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -112,6 +114,8 @@ public class NavigationFragment extends Fragment implements
     private MapboxDirections client;
     private Point origin;
     private Point destination;
+    private Style.Builder thisStyleBuilder;
+
 
 
     private PermissionsManager permissionsManager;
@@ -139,6 +143,7 @@ public class NavigationFragment extends Fragment implements
         View root = binding.getRoot();
         // This contains the MapView in XML and needs to be called after the access token is configured.
         // Setup the MapView
+        thisStyleBuilder = new Style.Builder().fromUri("mapbox://styles/chesterhu0008/cksq0gwaw0rt417jrbggk3x1j");
         mapView = root.findViewById(R.id.mapViewNew);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -151,7 +156,7 @@ public class NavigationFragment extends Fragment implements
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+        mapboxMap.setStyle(thisStyleBuilder, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
                 initSearchFab();
@@ -162,12 +167,15 @@ public class NavigationFragment extends Fragment implements
                         getContext().getResources(), R.drawable.red_marker));
 
                 // Create an empty GeoJSON source using the empty feature collection
-                setUpSource(style);
+                //setUpSource(style);
                 // Set up a new symbol layer for displaying the searched location's feature coordinates
-                setupLayer(style);
+                //setupLayer(style);
+
+
                 enableLocationComponent(style);
             }
         });
+
     }
 
     @Override
@@ -411,7 +419,7 @@ public class NavigationFragment extends Fragment implements
     }
 
     private void addUserLocations() {
-        home = CarmenFeature.builder().text("Mapbox SF Office")
+        home = CarmenFeature.builder().text("Home")
                 .geometry(Point.fromLngLat(-122.3964485, 37.7912561))
                 .placeName("50 Beale St, San Francisco, CA")
                 .id("mapbox-sf")
@@ -479,7 +487,7 @@ public class NavigationFragment extends Fragment implements
                     mapView.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                            mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                            mapboxMap.setStyle(thisStyleBuilder, new Style.OnStyleLoaded() {
                                 @Override
                                 public void onStyleLoaded(@NonNull Style style) {
 
@@ -517,7 +525,7 @@ public class NavigationFragment extends Fragment implements
                         mapView.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                                mapboxMap.setStyle(thisStyleBuilder, new Style.OnStyleLoaded() {
                                     @Override
                                     public void onStyleLoaded(@NonNull Style style) {
 
@@ -555,7 +563,7 @@ public class NavigationFragment extends Fragment implements
                         mapView.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                                mapboxMap.setStyle(thisStyleBuilder, new Style.OnStyleLoaded() {
                                     @Override
                                     public void onStyleLoaded(@NonNull Style style) {
 
@@ -587,14 +595,12 @@ public class NavigationFragment extends Fragment implements
                     });
 
 
-
-
                     //car
                     binding.carButton.setOnClickListener(v->{
                         mapView.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                                mapboxMap.setStyle(thisStyleBuilder, new Style.OnStyleLoaded() {
                                     @Override
                                     public void onStyleLoaded(@NonNull Style style) {
 
@@ -611,7 +617,6 @@ public class NavigationFragment extends Fragment implements
                                                 .include(new LatLng(origin.latitude(),origin.longitude())) // orange
                                                 .include(new LatLng(destination.latitude(),destination.longitude())) // destination
                                                 .build();
-
                                         binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24);
                                         binding.carButton.setImageResource(R.drawable.ic_baseline_directions_car_24_purple);
                                         binding.bikeButton.setImageResource(R.drawable.ic_baseline_directions_bike_24);
@@ -643,23 +648,10 @@ public class NavigationFragment extends Fragment implements
                     });
 
                     binding.endNavButton.setOnClickListener(v->{
-                        NavigationFragment fragmentInstance= new NavigationFragment();
-                        getActivity().getSupportFragmentManager().beginTransaction().remove(fragmentInstance).commit();
+                        NavController navController = Navigation.findNavController(v);
+                        navController.navigate(R.id.action_nav_navigation_to_safeFragment);
 
                     });
-
-
-
-
-
-
-
-
-
-
-
-
-
                 }
             }
         }

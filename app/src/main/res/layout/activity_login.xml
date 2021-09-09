@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
-        android:fontFamily="@font/square"
+        android:fontFamily="@font/handwritting2"
         />
 
     <androidx.constraintlayout.widget.Guideline
@@ -137,7 +137,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
-        android:fontFamily="@font/square"
+        android:fontFamily="@font/handwritting2"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
