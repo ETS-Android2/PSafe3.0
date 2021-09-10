@@ -1,34 +1,26 @@
-Android Example Application
-This is an example Android Application README to show briefly the sections your app README should contain.
+Android  Application
+Psafe
+This application is to help "newcomers" to Melbourne to fully understand the Pedestrian crossing system in Melbourne, thereby reducing injuries and fatalities to International immigrants.
 
 Installation
 Clone this repository and import into Android Studio
 
-git clone git@github.com:wolox/<reponame>.git
 Configuration
 Keystores:
-Create app/keystore.gradle with the following info:
+user name: hhh@qq.com
+password: 123456
 
-ext.key_alias='...'
-ext.key_password='...'
-ext.store_password='...'
-And place both keystores under app/keystores/ directory:
 
-playstore.keystore
-stage.keystore
 Build variants
 Use the Android Studio Build Variants button to choose between production and staging flavors combined with debug and release build types
-
 Generating signed APK
-From Android Studio:
+From Android Studio
 
-Build menu
-Generate Signed APK...
-Fill in the keystore information (you only need to do this once manually and then let Android Studio remember it)
+
 Maintainers
 This project is mantained by:
+Changshuo Hu
 
-Federico Ramundo
 Contributing
 Fork it
 Create your feature branch (git checkout -b my-new-feature)

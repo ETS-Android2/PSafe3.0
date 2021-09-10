@@ -148,6 +148,8 @@ public class NavigationFragment extends Fragment implements
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
         iniButton();
+        Toast.makeText(getContext(), getString(R.string.red_point_instruction), Toast.LENGTH_LONG).show();
+
 
 
         return root;
@@ -259,7 +261,7 @@ public class NavigationFragment extends Fragment implements
                 currentRoute = response.body().routes().get(0);
 
                 // Make a toast which displays the route's distance
-                Toast.makeText(getContext(), currentRoute.distance().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Distance: " + currentRoute.distance().toString() + "m", Toast.LENGTH_SHORT).show();
 
                 if (mapboxMap != null) {
                     mapboxMap.getStyle(new Style.OnStyleLoaded() {

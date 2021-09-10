@@ -97,4 +97,5 @@
     <string name="setting_privacy">Privacy</string>
     <string name="home_text_2">Tips: 6 steps when you get hit by a car</string>
     <string name="home_text_1">PSAFE--Keep you safe on the road!</string>
+    <string name="red_point_instruction">The red dots represent traffic accidents involving pedestrians in Victoria within five years</string>
 </resources>
