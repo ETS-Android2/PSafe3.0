@@ -1,9 +1,12 @@
 package com.example.psafe.ui.home;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Typeface;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psafe.R;
+import com.example.psafe.data.model.ProximityAlertReceiver;
 import com.example.psafe.data.model.Selfsaving;
 import com.example.psafe.data.model.Tips;
 import com.example.psafe.retrofit.SearchResponse;
@@ -78,12 +82,11 @@ public class HomeFragment extends Fragment {
     private RecyclerView.LayoutManager homeLayoutManager;
 
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.homeone_layout, container, false);
 
         sos_button = rootView.findViewById(R.id.SOS_button);
         scrollingText = rootView.findViewById(R.id.home_text1);
@@ -97,8 +100,13 @@ public class HomeFragment extends Fragment {
             return true;
         });
 
+  
 
 
+
+
+
+        /*
         recyclerView = rootView.findViewById(R.id.HomeRecyclerView);
         recyclerView.setHasFixedSize(true);
 
@@ -133,6 +141,7 @@ public class HomeFragment extends Fragment {
         homeViewModel.getRepository().getmDatabase().child("selfSaving").orderByChild("id").addValueEventListener(postListener);
 
         recyclerView.setAdapter(homeAdapter);
+        */
 
         return rootView;
     }
@@ -140,18 +149,18 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+       // ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+       // ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 }

@@ -1,9 +1,15 @@
 package com.example.psafe.ui.navigation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.psafe.BottomActivity;
 import com.example.psafe.R;
 
 import android.graphics.Color;
@@ -28,10 +35,12 @@ import android.widget.Toast;
 
 import com.example.psafe.databinding.FragmentDashboardBinding;
 import com.example.psafe.databinding.FragmentNavigationBinding;
+import com.example.psafe.ui.dashboard.DashboardViewModel;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
@@ -46,8 +55,14 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
@@ -99,11 +114,12 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineJoin;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
 
 public class NavigationFragment extends Fragment implements
-        OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener {
+        OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener, View.OnClickListener {
 
     private FragmentNavigationBinding binding;
 
     private NavigationViewModel mViewModel;
+
     private static final String ROUTE_LAYER_ID = "route-layer-id";
     private static final String ROUTE_SOURCE_ID = "route-source-id";
     private static final String ICON_LAYER_ID = "icon-layer-id";
@@ -115,23 +131,23 @@ public class NavigationFragment extends Fragment implements
     private Point origin;
     private Point destination;
     private Style.Builder thisStyleBuilder;
-
-
-
     private PermissionsManager permissionsManager;
     private MapboxMap mapboxMap;
     private LocationComponent locationComponent;
-    private boolean isInTrackingMode;
-
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
-    private CarmenFeature home;
-    private CarmenFeature work;
+
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
     private String symbolIconId = "symbolIconId";
+
+
+
+    FeatureCollection featureCollection;
+    private GeoJsonSource source;
 
     public static NavigationFragment newInstance() {
         return new NavigationFragment();
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -139,17 +155,19 @@ public class NavigationFragment extends Fragment implements
 
         Mapbox.getInstance(getContext(), getString(R.string.mapbox_access_token));
         binding = FragmentNavigationBinding.inflate(getLayoutInflater());
-
+        mViewModel =
+                new ViewModelProvider(this).get(NavigationViewModel.class);
         View root = binding.getRoot();
         // This contains the MapView in XML and needs to be called after the access token is configured.
         // Setup the MapView
         thisStyleBuilder = new Style.Builder().fromUri("mapbox://styles/chesterhu0008/cksq0gwaw0rt417jrbggk3x1j");
-        mapView = root.findViewById(R.id.mapViewNew);
+        mapView = binding.mapViewNew;
         mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
         iniButton();
-        Toast.makeText(getContext(), getString(R.string.red_point_instruction), Toast.LENGTH_LONG).show();
+        //new LoadGeoJsonDataTask().execute();
+        mapView.getMapAsync(this);
 
+        Toast.makeText(getContext(), getString(R.string.red_point_instruction), Toast.LENGTH_LONG).show();
 
 
         return root;
@@ -158,20 +176,14 @@ public class NavigationFragment extends Fragment implements
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
+
+
+
         mapboxMap.setStyle(thisStyleBuilder, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
                 initSearchFab();
-                addUserLocations();
-
-                // Add the symbol layer icon to map for future use
-                style.addImage(symbolIconId, BitmapFactory.decodeResource(
-                        getContext().getResources(), R.drawable.red_marker));
-
-                // Create an empty GeoJSON source using the empty feature collection
-                //setUpSource(style);
-                // Set up a new symbol layer for displaying the searched location's feature coordinates
-                //setupLayer(style);
+                //addUserLocations();
 
 
                 enableLocationComponent(style);
@@ -180,12 +192,7 @@ public class NavigationFragment extends Fragment implements
 
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(NavigationViewModel.class);
-        // TODO: Use the ViewModel
-    }
+
 
     /**
      * Add the route and marker sources to the map
@@ -218,7 +225,6 @@ public class NavigationFragment extends Fragment implements
         // Add the red marker icon image to the map
         loadedMapStyle.addImage(RED_PIN_ICON_ID, BitmapUtils.getBitmapFromDrawable(
                 getResources().getDrawable(R.drawable.outline_place_24)));
-
         // Add the red marker icon SymbolLayer to the map
         loadedMapStyle.addLayer(new SymbolLayer(ICON_LAYER_ID, ICON_SOURCE_ID).withProperties(
                 iconImage(RED_PIN_ICON_ID),
@@ -300,12 +306,10 @@ public class NavigationFragment extends Fragment implements
 
             // Create and customize the LocationComponent's options
             LocationComponentOptions customLocationComponentOptions = LocationComponentOptions.builder(getContext())
-
                     .build();
 
             // Get an instance of the component
             locationComponent = mapboxMap.getLocationComponent();
-
             LocationComponentActivationOptions locationComponentActivationOptions =
                     LocationComponentActivationOptions.builder(getContext(), loadedMapStyle)
                             .locationComponentOptions(customLocationComponentOptions)
@@ -329,25 +333,6 @@ public class NavigationFragment extends Fragment implements
             // Add the camera tracking listener. Fires if the map camera is manually moved.
             locationComponent.addOnCameraTrackingChangedListener(this);
 
-            /*
-            getView().findViewById(R.id.back_to_camera_tracking_mode).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!isInTrackingMode) {
-                        isInTrackingMode = true;
-                        locationComponent.setCameraMode(CameraMode.TRACKING);
-                        locationComponent.zoomWhileTracking(16f);
-                        Toast.makeText(getContext(), getString(R.string.tracking_enabled),
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), getString(R.string.tracking_already_enabled),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-             */
-
         } else {
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(getActivity());
@@ -365,14 +350,14 @@ public class NavigationFragment extends Fragment implements
         }
     }
 
+
     @Override
     public void onCameraTrackingDismissed() {
-        isInTrackingMode = false;
+        //isInTrackingMode = false;
     }
 
     @Override
     public void onCameraTrackingChanged(int currentMode) {
-// Empty on purpose
     }
 
     @Override
@@ -403,37 +388,7 @@ public class NavigationFragment extends Fragment implements
 //-----------------------------------------------------------SEARCH--------------------------------------
 
     private void initSearchFab() {
-        getView().findViewById(R.id.map_input).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new PlaceAutocomplete.IntentBuilder()
-                        .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : getString(R.string.mapbox_access_token))
-                        .placeOptions(PlaceOptions.builder()
-                                .backgroundColor(Color.parseColor("#EEEEEE"))
-                                .limit(10)
-                                .addInjectedFeature(home)
-                                .addInjectedFeature(work)
-                                .build(PlaceOptions.MODE_CARDS))
-                        .build(getActivity());
-                startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
-            }
-        });
-    }
-
-    private void addUserLocations() {
-        home = CarmenFeature.builder().text("Home")
-                .geometry(Point.fromLngLat(-122.3964485, 37.7912561))
-                .placeName("50 Beale St, San Francisco, CA")
-                .id("mapbox-sf")
-                .properties(new JsonObject())
-                .build();
-
-        work = CarmenFeature.builder().text("Mapbox DC Office")
-                .placeName("740 15th Street NW, Washington DC")
-                .geometry(Point.fromLngLat(-77.0338348, 38.899750))
-                .id("mapbox-dc")
-                .properties(new JsonObject())
-                .build();
+        binding.mapInput.setOnClickListener(this);
     }
 
     private void setUpSource(@NonNull Style loadedMapStyle) {
@@ -478,9 +433,6 @@ public class NavigationFragment extends Fragment implements
                                     .build()), 4000);
 
                     this.destination = (Point) selectedCarmenFeature.geometry();
-                    //Button navigate_button = getView().findViewById(R.id.navigate_button);
-
-                    //_________________________
 
 
                     origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLatitude(), locationComponent.getLastKnownLocation().getLatitude());
@@ -504,8 +456,8 @@ public class NavigationFragment extends Fragment implements
                                     // move the camera to fix the route
 
                                     LatLngBounds latLngBounds = new LatLngBounds.Builder()
-                                            .include(new LatLng(origin.latitude(),origin.longitude())) // orange
-                                            .include(new LatLng(destination.latitude(),destination.longitude())) // destination
+                                            .include(new LatLng(origin.latitude(), origin.longitude())) // orange
+                                            .include(new LatLng(destination.latitude(), destination.longitude())) // destination
                                             .build();
 
 
@@ -523,7 +475,7 @@ public class NavigationFragment extends Fragment implements
                     });
 
                     //bike
-                    binding.bikeButton.setOnClickListener(v->{
+                    binding.bikeButton.setOnClickListener(v -> {
                         mapView.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -531,7 +483,6 @@ public class NavigationFragment extends Fragment implements
                                     @Override
                                     public void onStyleLoaded(@NonNull Style style) {
 
-                                        // enableLocationComponent(style);
                                         origin = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(), locationComponent.getLastKnownLocation().getLatitude());
                                         initSource(style);
                                         initLayers(style);
@@ -541,8 +492,8 @@ public class NavigationFragment extends Fragment implements
                                         // move the camera to fix the route
 
                                         LatLngBounds latLngBounds = new LatLngBounds.Builder()
-                                                .include(new LatLng(origin.latitude(),origin.longitude())) // orange
-                                                .include(new LatLng(destination.latitude(),destination.longitude())) // destination
+                                                .include(new LatLng(origin.latitude(), origin.longitude())) // orange
+                                                .include(new LatLng(destination.latitude(), destination.longitude())) // destination
                                                 .build();
 
                                         binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24);
@@ -559,9 +510,8 @@ public class NavigationFragment extends Fragment implements
                     });
 
 
-
                     //walk
-                    binding.walkButton.setOnClickListener(v->{
+                    binding.walkButton.setOnClickListener(v -> {
                         mapView.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -579,8 +529,8 @@ public class NavigationFragment extends Fragment implements
                                         // move the camera to fix the route
 
                                         LatLngBounds latLngBounds = new LatLngBounds.Builder()
-                                                .include(new LatLng(origin.latitude(),origin.longitude())) // orange
-                                                .include(new LatLng(destination.latitude(),destination.longitude())) // destination
+                                                .include(new LatLng(origin.latitude(), origin.longitude())) // orange
+                                                .include(new LatLng(destination.latitude(), destination.longitude())) // destination
                                                 .build();
 
                                         binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24_purple);
@@ -598,7 +548,7 @@ public class NavigationFragment extends Fragment implements
 
 
                     //car
-                    binding.carButton.setOnClickListener(v->{
+                    binding.carButton.setOnClickListener(v -> {
                         mapView.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -616,8 +566,8 @@ public class NavigationFragment extends Fragment implements
                                         // move the camera to fix the route
 
                                         LatLngBounds latLngBounds = new LatLngBounds.Builder()
-                                                .include(new LatLng(origin.latitude(),origin.longitude())) // orange
-                                                .include(new LatLng(destination.latitude(),destination.longitude())) // destination
+                                                .include(new LatLng(origin.latitude(), origin.longitude())) // orange
+                                                .include(new LatLng(destination.latitude(), destination.longitude())) // destination
                                                 .build();
                                         binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24);
                                         binding.carButton.setImageResource(R.drawable.ic_baseline_directions_car_24_purple);
@@ -625,12 +575,12 @@ public class NavigationFragment extends Fragment implements
 
                                         mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50), 1000);
 
-
                                     }
                                 });
                             }
                         });
                     });
+
 
 
                     binding.startNavButton.setOnClickListener(v -> {
@@ -641,7 +591,6 @@ public class NavigationFragment extends Fragment implements
                     });
 
 
-
                     binding.helpNavButton.setOnLongClickListener(v -> {
                         Intent intent = new Intent(Intent.ACTION_DIAL);
                         intent.setData(Uri.parse("tel:000"));
@@ -649,7 +598,7 @@ public class NavigationFragment extends Fragment implements
                         return true;
                     });
 
-                    binding.endNavButton.setOnClickListener(v->{
+                    binding.endNavButton.setOnClickListener(v -> {
                         NavController navController = Navigation.findNavController(v);
                         navController.navigate(R.id.action_nav_navigation_to_safeFragment);
 
@@ -660,13 +609,11 @@ public class NavigationFragment extends Fragment implements
     }
 
 
-
-    private void iniButton()
-    {
+    private void iniButton() {
         binding.walkButton.setImageResource(R.drawable.ic_baseline_directions_walk_24);
         binding.carButton.setImageResource(R.drawable.ic_baseline_directions_car_24_purple);
         binding.bikeButton.setImageResource(R.drawable.ic_baseline_directions_bike_24);
-       // setCameraTrackingMode(CameraMode.NONE);
+        // setCameraTrackingMode(CameraMode.NONE);
         binding.navigationMenu.setVisibility(View.GONE);
         binding.navMenu2.setVisibility(View.GONE);
         binding.testCardButton.setVisibility(View.VISIBLE);
@@ -678,7 +625,7 @@ public class NavigationFragment extends Fragment implements
     public void onResume() {
         super.onResume();
         mapView.onResume();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
     @SuppressWarnings({"MissingPermission"})
@@ -686,7 +633,7 @@ public class NavigationFragment extends Fragment implements
     public void onStart() {
         super.onStart();
         mapView.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
 
@@ -694,7 +641,7 @@ public class NavigationFragment extends Fragment implements
     public void onStop() {
         super.onStop();
         mapView.onStop();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        //((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
     @Override
@@ -754,6 +701,141 @@ public class NavigationFragment extends Fragment implements
     }
 
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.map_input:
+                Intent intent = new PlaceAutocomplete.IntentBuilder()
+                        .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : getString(R.string.mapbox_access_token))
+                        .placeOptions(PlaceOptions.builder()
+                                .backgroundColor(Color.parseColor("#EEEEEE"))
+                                .limit(10)
+                                .bbox(139, -40, 151, -34)
+                                .addInjectedFeature(mViewModel.home)
+                                .addInjectedFeature(mViewModel.work)
+                                .build(PlaceOptions.MODE_CARDS))
+                        .build(getActivity());
+                startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+                break;
+
+
+        }
+
+
+    }
+
+
+
+
+    /**
+     * AsyncTask to load data from the assets folder.
+     */
+    private static class LoadGeoJsonDataTask extends AsyncTask<Void, Void, FeatureCollection> {
+
+
+        NavigationFragment fragment;
+        @Override
+        protected FeatureCollection doInBackground(Void... params) {
+
+            String geoJson = loadGeoJsonFromAsset(fragment,"earthquakes.geojson");
+            return FeatureCollection.fromJson(geoJson);
+        }
+
+        @Override
+        protected void onPostExecute(FeatureCollection featureCollection) {
+            super.onPostExecute(featureCollection);
+
+
+
+// This example runs on the premise that each GeoJSON Feature has a "selected" property,
+// with a boolean value. If your data's Features don't have this boolean property,
+// add it to the FeatureCollection 's features with the following code:
+
+/*            for (Feature singleFeature : featureCollection.features()) {
+                singleFeature.addBooleanProperty(PROPERTY_SELECTED, false);
+            }
+
+
+
+            activity.setUpData(featureCollection);
+            new BottomActivity.GenerateViewIconTask(activity).execute(featureCollection);
+
+ */
+        }
+
+        static String loadGeoJsonFromAsset(Fragment fragment, String filename) {
+            try {
+// Load GeoJSON file from local asset folder
+                InputStream is = fragment.getActivity().getAssets().open(filename);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                return new String(buffer, Charset.forName("UTF-8"));
+            } catch (Exception exception) {
+                throw new RuntimeException(exception);
+            }
+        }
+    }
+
+
+
+    /**
+     * Utility class to generate Bitmaps for Symbol.
+     */
+    private static class SymbolGenerator {
+
+        /**
+         * Generate a Bitmap from an Android SDK View.
+         *
+         * @param view the View to be drawn to a Bitmap
+         * @return the generated bitmap
+         */
+        static Bitmap generate(@NonNull View view) {
+            int measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+            view.measure(measureSpec, measureSpec);
+
+            int measuredWidth = view.getMeasuredWidth();
+            int measuredHeight = view.getMeasuredHeight();
+
+            view.layout(0, 0, measuredWidth, measuredHeight);
+            Bitmap bitmap = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888);
+            bitmap.eraseColor(Color.TRANSPARENT);
+            Canvas canvas = new Canvas(bitmap);
+            view.draw(canvas);
+            return bitmap;
+        }
+    }
+
+    /*
+    public void setUpData(final FeatureCollection collection) {
+        featureCollection = collection;
+        if (mapboxMap != null) {
+            mapboxMap.getStyle(style -> {
+                setupSource(style);
+                setUpImage(style);
+                setUpMarkerLayer(style);
+                setUpInfoWindowLayer(style);
+            });
+        }
+    }
+
+
+     */
+    /**
+     * Adds the GeoJSON source to the map
+     */
+
+
+    /**
+     * Updates the display of data on the map after the FeatureCollection has been modified
+     */
+    private void refreshSource() {
+        if (source != null && featureCollection != null) {
+            source.setGeoJson(featureCollection);
+        }
+    }
 
 
 }

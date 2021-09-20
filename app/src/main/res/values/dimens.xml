@@ -19,4 +19,7 @@
     <dimen name="inner_frame_layout_padding">5dp</dimen>
 
     <dimen name="dashboard_radius">40dp</dimen>
+    <dimen name="home_margin_hor">18dp</dimen>
+    <dimen name="home_text_title">30dp</dimen>
+    <dimen name="home_text">20dp</dimen>
 </resources>

@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/purple_wallpaper_1"
-
-    tools:context=".ui.home.HomeFragment">
+    android:layout_height="match_parent">
 
 
     <Button
         android:id="@+id/SOS_button"
+        style="@null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/red"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="16dp"
+
+
+        android:background="@drawable/button_red"
 
         android:fontFamily="@font/handwritting2"
         android:text="@string/sos_button"
+        android:textSize="20dp"
+
         app:icon="@drawable/ic_baseline_notification_important_24"
         app:layout_constraintCircleRadius="@dimen/dashboard_radius"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_text1" />
-
 
     <TextView
         android:id="@+id/home_text1"
@@ -64,7 +65,7 @@
                 android:id="@+id/home_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/square"
+                android:fontFamily="@font/handwritting2"
                 android:text="@string/home_text_2"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/HomeRecyclerView"

@@ -126,7 +126,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         if(isZh(context));
         //holder.likeButton.setImageResource(R.drawable.ic_baseline_thumb_up_no_24);
         //holder.dislikeButton.setImageResource(R.drawable.ic_baseline_thumb_up_no_24);
-        holder.newsTitle.setText(oneNews.getTitle());
+        holder.newsTitle.setText(oneNews.getTitle() + "\n" + oneNews.getDate());
         holder.newsContent.setText(oneNews.getContent());
         // Download directly from StorageReference using Glide
 // (See MyAppGlideModule for Loader registration)

@@ -10,8 +10,9 @@ public class News {
     private int dislike;
     private String source;
     private String image = "image";
+    private String date;
 
-    public News(String id, String title, String content, int like, int dislike, String source,String image) {
+    public News(String id, String title, String content, int like, int dislike, String source,String image,String date) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -19,6 +20,7 @@ public class News {
         this.dislike = dislike;
         this.source = source;
         this.image = image;
+        this.date = date;
     }
     public News(String title) {
         this.id = "id";
@@ -28,6 +30,7 @@ public class News {
         this.dislike = -11;
         this.source = "source";
         this.image = "image";
+        this.date = "date";
     }
 
     public News() {
@@ -38,8 +41,8 @@ public class News {
         this.dislike = -11;
         this.source = "source";
         this.image = "image";
+        this.date = "date";
     }
-
     public String getImage() {
         return image;
     }
@@ -47,6 +50,7 @@ public class News {
     public void setImage(String image) {
         this.image = image;
     }
+
 
     public String getId() {
         return id;
@@ -90,6 +94,14 @@ public class News {
 
     public String getSource() {
         return source;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setSource(String source) {

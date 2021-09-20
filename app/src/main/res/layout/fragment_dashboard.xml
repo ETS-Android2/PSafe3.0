@@ -4,34 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/purple_wallpaper_1"
+    android:background="@drawable/side_nav_bar"
+
     tools:context=".ui.dashboard.DashboardFragment">
 
     <Button
 
         android:id="@+id/dashboard_visualize_button"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/dashboardButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginVertical="@dimen/home_margin_hor"
+        android:layout_marginHorizontal="@dimen/home_margin_hor"
+        android:textSize="30dp"
+
         android:text="@string/dashboard_visualization"
-        app:icon="@drawable/ic_baseline_bar_chart_24"
         app:iconGravity="textTop"
-android:fontFamily="@font/handwritting2"
+        app:icon="@drawable/ic_baseline_bar_chart_24"
+        android:textColor="@color/pDark"
+
+        android:fontFamily="@font/handwritting2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:textSize="30dp"
 
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/dashboardButton"
 
         android:id="@+id/dashboard_news_button"
         app:icon="@drawable/outline_article_24"
         app:iconGravity="textTop"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/home_margin_hor"
         android:fontFamily="@font/handwritting2"
 
         android:text="@string/dashboard_news"
@@ -40,14 +47,16 @@ android:fontFamily="@font/handwritting2"
         app:layout_constraintTop_toBottomOf="@+id/dashboard_visualize_button" />
 
     <Button
+        android:textSize="30dp"
+
         android:id="@+id/dashboard_tips_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/home_margin_hor"
         app:icon="@drawable/ic_baseline_tips_and_updates_24"
         app:iconGravity="textTop"
         android:fontFamily="@font/handwritting2"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/dashboardButton"
 
 
 
@@ -64,16 +73,17 @@ android:fontFamily="@font/handwritting2"
         app:layout_constraintGuide_percent="0.9" />
 
     <Button
+        android:textSize="30dp"
 
         android:id="@+id/dashboard_weather_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/home_margin_hor"
         app:icon="@drawable/ic_baseline_wb_sunny_24"
         app:iconGravity="textTop"
         android:text="@string/dashboard_weather"
         android:fontFamily="@font/handwritting2"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/dashboardButton"
 
 
         app:layout_constraintEnd_toEndOf="parent"

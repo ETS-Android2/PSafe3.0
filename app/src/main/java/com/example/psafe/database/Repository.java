@@ -85,8 +85,8 @@ public class Repository {
 
     }
 
-    public void writeNewUser(String id, String title, String content, int like, int dislike, String source,String image) {
-        News oneNews = new News(id,title,content,like,dislike,source,image);
+    public void writeNewUser(String id, String title, String content, int like, int dislike, String source,String image,String date) {
+        News oneNews = new News(id,title,content,like,dislike,source,image,date);
         mDatabase.child("news").child(id).setValue(oneNews);
     }
 

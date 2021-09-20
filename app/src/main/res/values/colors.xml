@@ -9,4 +9,16 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#F44336</color>
     <color name="Psafe_purple">#8C6B0C8E</color>
+    <color name="transparent">#0DA7FFEB</color>
+    <color name="pcolor">#e1bee7</color>
+    <color name="pLight">#fff1ff</color>
+    <color name="pDark">#af8eb5</color>
+    <color name="dashboardButton">#E6E0E0</color>
+
+
+
+
+    #fff1ff
+
+
 </resources>
