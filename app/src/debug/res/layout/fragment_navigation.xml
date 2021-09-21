@@ -179,7 +179,8 @@
         mapbox:layout_constraintStart_toStartOf="parent"
         mapbox:layout_constraintTop_toTopOf="parent"
         mapbox:layout_constraintVertical_bias="0.0"
-        mapbox:mapbox_cameraZoom="14">
+        mapbox:mapbox_cameraZoom="14"
+        >
 
     </com.mapbox.mapboxsdk.maps.MapView>
 

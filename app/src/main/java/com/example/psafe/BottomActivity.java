@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -69,8 +70,9 @@ import timber.log.Timber;
 public class BottomActivity extends AppCompatActivity {
 
     private static final long MINIMUM_DISTANCECHANGE_FOR_UPDATE = 1; // in Meters
-    private static final long MINIMUM_TIME_BETWEEN_UPDATE = 1000; // in Milliseconds
+    private static final long MINIMUM_TIME_BETWEEN_UPDATE = 60 * 1000; // in Milliseconds
     LocationManager locationManager;
+
 
     String channelId = "psafe";
 
@@ -79,6 +81,7 @@ public class BottomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+
 
 
 
@@ -113,10 +116,6 @@ public class BottomActivity extends AppCompatActivity {
                 MINIMUM_DISTANCECHANGE_FOR_UPDATE,
                 (LocationListener) new MyLocationListener()
         );
-
-
-
-
     }
 
 
@@ -155,7 +154,29 @@ public class BottomActivity extends AppCompatActivity {
                 location1.setLatitude(latLngArrayList.get(i).getLatitude());
                 location1.setLongitude(latLngArrayList.get(i).getLongitude());
                 if(location.distanceTo(location1) < 5) {
-                    Toast.makeText(BottomActivity.this, "near dangerous zone", Toast.LENGTH_LONG).show();
+                    Toast.makeText(BottomActivity.this, getString(R.string.nearDangerousZone), Toast.LENGTH_LONG).show();
+
+
+                    createNotificationChannel();
+                    NotificationCompat.Builder builder =
+                            new NotificationCompat.Builder(BottomActivity.this, channelId)
+                                    .setSmallIcon(R.drawable.ic_baseline_notification_important_24)
+                                    .setContentTitle(getString(R.string.channel_name))
+                                    .setContentText(getString(R.string.nearDangerousZone))
+                                    .setVibrate(new long[] { 1000, 1000})
+                    .setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+
+
+                    Intent notificationIntent = new Intent(getApplicationContext(), BottomActivity.class);
+                    PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+                    builder.setContentIntent(contentIntent);
+
+                    // Add as notification
+                    NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    manager.notify(0, builder.build());
+
+
                 }
 
             }
@@ -165,6 +186,22 @@ public class BottomActivity extends AppCompatActivity {
             }
 
              */
+        }
+
+        private void createNotificationChannel() {
+            // Create the NotificationChannel, but only on API 26+ because
+            // the NotificationChannel class is new and not in the support library
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                CharSequence name = getString(R.string.channel_name);
+                String description = getString(R.string.channel_description);
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                NotificationChannel channel = new NotificationChannel(channelId, name, importance);
+                channel.setDescription(description);
+                // Register the channel with the system; you can't change the importance
+                // or other notification behaviors after this
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+            }
         }
 
         public void onStatusChanged(String s, int i, Bundle b) {

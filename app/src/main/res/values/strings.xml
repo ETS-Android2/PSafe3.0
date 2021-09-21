@@ -104,4 +104,10 @@
     <string name="home_card_2_text_2">temperature</string>
     <string name="title_activity_marker">MarkerActivity</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="distance">"distance: "</string>
+    <string name="temperature">"Temperature: "</string>
+    <string name="humidity">"Humidity: "</string>
+    <string name="channel_name">Psafe</string>
+    <string name="channel_description">Psafe channel</string>
+    <string name="nearDangerousZone">Near Dangerous Zone!!!!</string>
 </resources>

@@ -9,7 +9,12 @@
         android:id="@+id/nav_home"
         android:name="com.example.psafe.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/homeone_layout" />
+        tools:layout="@layout/homeone_layout" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_navigation"
+            app:destination="@id/nav_navigation"
+            app:enterAnim="@anim/nav_default_pop_enter_anim" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"

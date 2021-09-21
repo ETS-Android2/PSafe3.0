@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
@@ -101,6 +102,7 @@ import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 import com.mapbox.turf.TurfMeta;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 import static com.mapbox.core.constants.Constants.PRECISION_6;
@@ -184,6 +186,15 @@ public class NavigationFragment extends Fragment implements
             public void onStyleLoaded(@NonNull Style style) {
                 initSearchFab();
                 //addUserLocations();
+                SharedPreferences sp = getActivity().getSharedPreferences("homeSp", MODE_PRIVATE);
+                if(sp.getString("fromHome","no").equals("yes"))
+                {
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putString("fromHome", "no");
+                    boolean commit = edit.commit();
+                    binding.mapInput.callOnClick();
+                }
+
 
 
                 enableLocationComponent(style);
@@ -267,7 +278,7 @@ public class NavigationFragment extends Fragment implements
                 currentRoute = response.body().routes().get(0);
 
                 // Make a toast which displays the route's distance
-                Toast.makeText(getContext(), "Distance: " + currentRoute.distance().toString() + "m", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.distance) + currentRoute.distance()/1000 + "km", Toast.LENGTH_SHORT).show();
 
                 if (mapboxMap != null) {
                     mapboxMap.getStyle(new Style.OnStyleLoaded() {
