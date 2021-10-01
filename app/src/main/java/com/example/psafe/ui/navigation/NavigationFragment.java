@@ -162,6 +162,12 @@ public class NavigationFragment extends Fragment implements
         View root = binding.getRoot();
         // This contains the MapView in XML and needs to be called after the access token is configured.
         // Setup the MapView
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                thisStyleBuilder = new Style.Builder().fromUri("mapbox://styles/chesterhu0008/cksq0gwaw0rt417jrbggk3x1j");
+            }
+        }).start();
         thisStyleBuilder = new Style.Builder().fromUri("mapbox://styles/chesterhu0008/cksq0gwaw0rt417jrbggk3x1j");
         mapView = binding.mapViewNew;
         mapView.onCreate(savedInstanceState);

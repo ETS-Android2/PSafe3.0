@@ -99,7 +99,7 @@
     <string name="home_text_1">PSAFE</string>
     <string name="red_point_instruction">The red dots represent traffic accidents involving pedestrians in Victoria within five years</string>
     <string name="menu_weather">Weather</string>
-    <string name="home_card_1_text_1">Want safe? Get safe.</string>
+
     <string name="home_card_2_text_1">Going out safely</string>
     <string name="home_card_2_text_2">temperature</string>
     <string name="title_activity_marker">MarkerActivity</string>
@@ -110,4 +110,8 @@
     <string name="channel_name">Psafe</string>
     <string name="channel_description">Psafe channel</string>
     <string name="nearDangerousZone">Near Dangerous Zone!!!!</string>
+    <string name="home_card_1_text_1">Enter your destination</string>
+    <string name="home_card_1_text_2">Plan your safe routes</string>
+    <string name="home_card_2_tips">Tips: First look right, then look left!</string>
+    <string name="channel_name_drawer">drawer</string>
 </resources>

@@ -22,4 +22,5 @@
     <dimen name="home_margin_hor">18dp</dimen>
     <dimen name="home_text_title">30dp</dimen>
     <dimen name="home_text">20dp</dimen>
+    <dimen name="home_margin_vir">20dp</dimen>
 </resources>

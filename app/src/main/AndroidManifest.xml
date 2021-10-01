@@ -24,25 +24,11 @@
         android:usesCleartextTraffic="true">
 
 
-
-        <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test">
-
-        </activity>
-
-
-
-        <receiver android:name=".data.model.ProximityAlertReceiver"  android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
-                <action android:name="android.intent.action.LOCALE_CHANGED" />
-            </intent-filter>
-        </receiver>
         <activity
             android:name=".ui.navigation.MarkerActivity"
-            android:label="@string/title_activity_marker"></activity>
+            android:label="@string/title_activity_marker">
+
+        </activity>
         <activity
             android:name=".BottomActivity"
             android:label="@string/title_activity_bottom">

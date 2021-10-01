@@ -1,37 +1,24 @@
 package com.example.psafe.ui.navigation;
 
-import android.Manifest;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.widget.TextView;
+
 import com.example.psafe.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PointF;
 import android.os.AsyncTask;
-import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.psafe.data.model.ProximityAlertReceiver;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 
 import com.mapbox.mapboxsdk.Mapbox;
-import com.mapbox.mapboxsdk.annotations.BubbleLayout;
-import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -45,7 +32,6 @@ import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.mapbox.mapboxsdk.style.expressions.Expression.eq;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.get;
@@ -87,8 +73,6 @@ public class MarkerActivity extends AppCompatActivity implements
     private static final String POINT_LATITUDE_KEY = "POINT_LATITUDE_KEY";
     private static final String POINT_LONGITUDE_KEY = "POINT_LONGITUDE_KEY";
 
-    private static final String PROX_ALERT_INTENT =
-            "com.psafe.data.model.ProximityAlertReceiver";
 
     private static final NumberFormat nf = new DecimalFormat("##.########");
 

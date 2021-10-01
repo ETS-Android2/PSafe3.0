@@ -1,26 +1,8 @@
 package com.example.psafe.ui.home;
 
-import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
-import android.app.AlertDialog;
-import android.content.IntentSender;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,33 +13,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.psafe.R;
 import com.example.psafe.retrofit.SearchResponse;
 import com.example.psafe.retrofit.Weather;
-import com.example.psafe.ui.home.HomeViewModel;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
 
-import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,61 +42,14 @@ import android.location.Location;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.psafe.R;
-import com.example.psafe.data.model.ProximityAlertReceiver;
 import com.example.psafe.data.model.Selfsaving;
-import com.example.psafe.data.model.Tips;
-import com.example.psafe.retrofit.SearchResponse;
-import com.example.psafe.retrofit.Weather;
-import com.example.psafe.ui.tips.TipRecyclerViewAdapter;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-
-import pl.droidsonroids.gif.GifImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import android.Manifest;
-
-import android.content.pm.PackageManager;
-import android.location.Location;
-
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -195,7 +119,7 @@ public class HomeFragment extends Fragment implements ConnectionCallbacks,
         humField = rootView.findViewById(R.id.home_card_2_hum);
         searchButton = rootView.findViewById(R.id.map_input_home);
         sos_button = rootView.findViewById(R.id.SOS_button);
-        scrollingText = rootView.findViewById(R.id.home_text1);
+        scrollingText = rootView.findViewById(R.id.home_card_2_tips);
         scrollingText.setSelected(true);
 
 

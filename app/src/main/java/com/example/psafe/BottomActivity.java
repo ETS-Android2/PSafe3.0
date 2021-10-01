@@ -3,66 +3,38 @@ package com.example.psafe;
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.LocationManager;
 
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
-import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.example.psafe.data.model.ProximityAlertReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.viewpager.widget.ViewPager;
-
-import timber.log.Timber;
 
 /**
  * main activty
@@ -80,6 +52,7 @@ public class BottomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom);
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
 
@@ -96,6 +69,10 @@ public class BottomActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+
+
+
 
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -143,21 +120,25 @@ public class BottomActivity extends AppCompatActivity {
         public void onLocationChanged(Location location) {
 
 
-
+            createNotificationChannel();
             ArrayList<LatLng> latLngArrayList = new ArrayList<>();
             latLngArrayList.add(new LatLng(-37.8152,144.9542));
             latLngArrayList.add(new LatLng(-37.8152,144.9543));
 
 
-            for(int i = 0; i < latLngArrayList.size(); i++) {
+            boolean isFindHarzardZone = false;
+
+            for(int i = 0; i < latLngArrayList.size() && !isFindHarzardZone; i++) {
+
                 Location location1 = new Location("POINT_LOCATION");
                 location1.setLatitude(latLngArrayList.get(i).getLatitude());
                 location1.setLongitude(latLngArrayList.get(i).getLongitude());
                 if(location.distanceTo(location1) < 5) {
+                    isFindHarzardZone = true;
                     Toast.makeText(BottomActivity.this, getString(R.string.nearDangerousZone), Toast.LENGTH_LONG).show();
 
 
-                    createNotificationChannel();
+
                     NotificationCompat.Builder builder =
                             new NotificationCompat.Builder(BottomActivity.this, channelId)
                                     .setSmallIcon(R.drawable.ic_baseline_notification_important_24)
@@ -192,7 +173,7 @@ public class BottomActivity extends AppCompatActivity {
             // Create the NotificationChannel, but only on API 26+ because
             // the NotificationChannel class is new and not in the support library
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                CharSequence name = getString(R.string.channel_name);
+                CharSequence name = getString(R.string.channel_name_drawer);
                 String description = getString(R.string.channel_description);
                 int importance = NotificationManager.IMPORTANCE_DEFAULT;
                 NotificationChannel channel = new NotificationChannel(channelId, name, importance);
