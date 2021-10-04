@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class TipsFragment extends Fragment {
 
@@ -72,7 +73,13 @@ public class TipsFragment extends Fragment {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         };
-        tipsViewModel.getRepository().getmDatabase().child("tips").addValueEventListener(postListener);
+        //language
+        if(Locale.getDefault().getLanguage().equals("zh")) {
+            Log.w("Language", Locale.getDefault().getLanguage());
+            tipsViewModel.getRepository().getmDatabase().child("tips-zh").addValueEventListener(postListener);
+        }
+        else
+            tipsViewModel.getRepository().getmDatabase().child("tips").addValueEventListener(postListener);
 
         recyclerView.setAdapter(tipsAdapter);
 

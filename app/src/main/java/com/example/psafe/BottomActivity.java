@@ -24,6 +24,7 @@ import android.location.LocationListener;
 import android.widget.Toast;
 
 
+import com.example.psafe.data.model.AccidentLocation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
@@ -40,7 +41,7 @@ import androidx.navigation.ui.NavigationUI;
  * main activty
  */
 public class BottomActivity extends AppCompatActivity {
-
+/*
     private static final long MINIMUM_DISTANCECHANGE_FOR_UPDATE = 1; // in Meters
     private static final long MINIMUM_TIME_BETWEEN_UPDATE = 60 * 1000; // in Milliseconds
     LocationManager locationManager;
@@ -48,6 +49,8 @@ public class BottomActivity extends AppCompatActivity {
 
     String channelId = "psafe";
 
+
+ */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +76,10 @@ public class BottomActivity extends AppCompatActivity {
 
 
 
+/*
 
-
+        ArrayList<AccidentLocation> accidentLocations = new ArrayList<>();
+        accidentLocations.add(new AccidentLocation(-37.8152,144.9542));
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -91,8 +96,10 @@ public class BottomActivity extends AppCompatActivity {
                 LocationManager.GPS_PROVIDER,
                 MINIMUM_TIME_BETWEEN_UPDATE,
                 MINIMUM_DISTANCECHANGE_FOR_UPDATE,
-                (LocationListener) new MyLocationListener()
+                (LocationListener) new MyLocationListener(accidentLocations)
         );
+
+ */
     }
 
 
@@ -115,24 +122,27 @@ public class BottomActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+/*
     public class MyLocationListener implements LocationListener {
+        private ArrayList<AccidentLocation> accidentLocationArrayList;
+        public MyLocationListener(ArrayList<AccidentLocation> accidentLocationArrayList) {
+            this.accidentLocationArrayList = accidentLocationArrayList;
+        }
+
         public void onLocationChanged(Location location) {
 
 
             createNotificationChannel();
-            ArrayList<LatLng> latLngArrayList = new ArrayList<>();
-            latLngArrayList.add(new LatLng(-37.8152,144.9542));
-            latLngArrayList.add(new LatLng(-37.8152,144.9543));
+            //accidentLocationArrayList.add(new AccidentLocation(-37.8152,144.9542));
 
 
             boolean isFindHarzardZone = false;
 
-            for(int i = 0; i < latLngArrayList.size() && !isFindHarzardZone; i++) {
+            for(int i = 0; i < accidentLocationArrayList.size() && !isFindHarzardZone; i++) {
 
                 Location location1 = new Location("POINT_LOCATION");
-                location1.setLatitude(latLngArrayList.get(i).getLatitude());
-                location1.setLongitude(latLngArrayList.get(i).getLongitude());
+                location1.setLatitude(accidentLocationArrayList.get(i).getLatitude());
+                location1.setLongitude(accidentLocationArrayList.get(i).getLongitude());
                 if(location.distanceTo(location1) < 5) {
                     isFindHarzardZone = true;
                     Toast.makeText(BottomActivity.this, getString(R.string.nearDangerousZone), Toast.LENGTH_LONG).show();
@@ -161,12 +171,7 @@ public class BottomActivity extends AppCompatActivity {
                 }
 
             }
-            /*if(distance < 5) {
-                Toast.makeText(TestActivity.this,
-                        "Distance from Point:" + distance, Toast.LENGTH_LONG).show();
-            }
 
-             */
         }
 
         private void createNotificationChannel() {
@@ -196,5 +201,7 @@ public class BottomActivity extends AppCompatActivity {
     }
 
 
+
+ */
 
 }

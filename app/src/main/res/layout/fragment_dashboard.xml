@@ -26,7 +26,8 @@
         android:fontFamily="@font/handwritting2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
     <Button
         android:textSize="30dp"
@@ -40,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/home_margin_hor"
         android:fontFamily="@font/handwritting2"
+        android:textColor="@color/pDark"
 
         android:text="@string/dashboard_news"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +50,7 @@
 
     <Button
         android:textSize="30dp"
+        android:textColor="@color/pDark"
 
         android:id="@+id/dashboard_tips_button"
         android:layout_width="0dp"
@@ -74,6 +77,7 @@
 
     <Button
         android:textSize="30dp"
+        android:textColor="@color/pDark"
 
         android:id="@+id/dashboard_weather_button"
         android:layout_width="0dp"

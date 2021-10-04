@@ -79,6 +79,8 @@ public class GalleryFragment extends Fragment {
             Log.w("Language", Locale.getDefault().getLanguage());
             galleryViewModel.getRepository().getmDatabase().child("news-zh").addValueEventListener(postListener);
         }
+        else
+            galleryViewModel.getRepository().getmDatabase().child("news").addValueEventListener(postListener);
 
         recyclerView.setAdapter(newsAdapter);
 

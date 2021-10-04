@@ -114,4 +114,10 @@
     <string name="home_card_1_text_2">Plan your safe routes</string>
     <string name="home_card_2_tips">Tips: First look right, then look left!</string>
     <string name="channel_name_drawer">drawer</string>
+    <string name="default_distance">distance</string>
+    <string name="guidance">Guidance</string>
+    <string name="advanced_sound">Sound</string>
+    <string name="advanced_sound_on">Sound on</string>
+    <string name="advanced_sound_off">sound off</string>
+    <string name="setting_contact">Contact us</string>
 </resources>

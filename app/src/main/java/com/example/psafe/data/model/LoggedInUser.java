@@ -31,7 +31,6 @@ public class LoggedInUser {
     public LoggedInUser(String userId, String displayName, String position) {
         this.userId = userId;
         this.displayName = displayName;
-
         this.position = position;
     }
 

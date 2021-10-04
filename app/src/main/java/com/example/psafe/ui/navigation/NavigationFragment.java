@@ -283,8 +283,9 @@ public class NavigationFragment extends Fragment implements
                 // Get the directions route
                 currentRoute = response.body().routes().get(0);
 
+                binding.navigationDistance.setText(getString(R.string.distance) + String.format("%.2f",currentRoute.distance()/1000) + "km");
                 // Make a toast which displays the route's distance
-                Toast.makeText(getContext(), getString(R.string.distance) + currentRoute.distance()/1000 + "km", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), getString(R.string.distance) + currentRoute.distance()/1000 + "km", Toast.LENGTH_SHORT).show();
 
                 if (mapboxMap != null) {
                     mapboxMap.getStyle(new Style.OnStyleLoaded() {
@@ -601,7 +602,7 @@ public class NavigationFragment extends Fragment implements
 
 
                     binding.startNavButton.setOnClickListener(v -> {
-                        setCameraTrackingMode(CameraMode.TRACKING);
+                        setCameraTrackingMode(CameraMode.TRACKING_GPS);
                         binding.navigationMenu.setVisibility(View.GONE);
                         binding.navMenu2.setVisibility(View.VISIBLE);
                         binding.testCardButton.setVisibility(View.GONE);

@@ -1,4 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="mapbox_access_token"> pk.eyJ1IjoiY2hlc3Rlcmh1MDAwOCIsImEiOiJja3NkN2ZveGYwbnllMzFwaTB6anFrMmh1In0.sGe3YiahwOboyt92i2n3OQ</string>
+
+    <string name="app_name">PSafe</string>
+    <string name="navigation_drawer_open">打开导航菜单</string>
+    <string name="navigation_drawer_close">关闭导航菜单</string>
+    <string name="nav_header_title">Psafe</string>
+    <string name="nav_header_subtitle">确保行人安全</string>
+    <string name="nav_header_desc">导航标题</string>
+    <string name="action_settings">设置</string>
+    <string name="details">详细资料</string>
+    <string name="action_back_sign_in">返回</string>
+    <string name="menu_home">PSafe</string>
+    <string name="menu_gallery">新闻</string>
+    <string name="menu_slideshow">幻灯片</string>
+    <string name="menu_map">地图</string>
+    <string name="title_activity_login">欢迎使用PSafe，请先登录</string>
+    <string name="prompt_email">邮箱</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_sign_up">注册</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="welcome">"欢迎！"</string>
+    <string name="invalid_username">用户名无效！</string>
+    <string name="invalid_password">密码长度必须大于5</string>
+    <string name="login_failed">"登陆失败"</string>
+    <string name="title_activity_signup">欢迎使用PSafe，请先注册</string>
+    <string name="password_need">请不要使用空白密码</string>
+    <string name="email_need">请不要使用空白邮箱</string>
+    <string name="login_success">登陆成功</string>
+    <string name="logout_success"> 登出成功</string>
+
+    <string name="action_logout">退出登录</string>
+    <string name="title_activity_map">地图</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="zoom_map_in_and_out_instruction">aaaaa</string>
+    <string name="menu_map_fragment">地图</string>
+    <string name="menu_news">新闻</string>
+    <string name="home_fragment_content">如何使用这款软件</string>
+    <string name="sos">紧急求助</string>
+    <string name="title_placeholder">新闻标题</string>
+    <string name="news_placeholder">内容</string>
+    <string name="like">赞</string>
+    <string name="dislike">踩</string>
+    <string name="menu_tips">小妙招</string>
+
+    <string name="place_not_found">抱歉，未能找到相关天气信息</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_location_permission_explanation">需要获取权限</string>
+    <string name="menu_test_map_fragment">测试地图</string>
+    <string name="menu_help">帮助</string>
+    <string name="help_string">这是PSafe的指导视频</string>
+    <string name="title_activity_bottom">MainActivity</string>
+    <string name="title_home">主页</string>
+    <string name="title_dashboard">信息</string>
+    <string name="title_notifications">通知</string>
+    <string name="dashboard_tips">小妙招</string>
+    <string name="dashboard_news">新闻</string>
+    <string name="dashboard_visualization">数据可视化</string>
+    <string name="menu_dashboard">信息</string>
+    <string name="current_location">Lat: %1$f Long: %2$f</string>
+    <string name="tracking_enabled">跟踪模式重新启用</string>
+    <string name="tracking_already_enabled">跟踪已启用，请移动地图</string>
+    <string name="user_location_permission_not_granted">您未授予位置权限</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">基础</string>
+    <string name="sync_header">高级</string>
+
+    <!-- Bassic Preferences -->
+    <string name="signature_title">您的邮箱</string>
+    <string name="reply_title">默认的回复</string>
+
+    <!-- Advanced Preferences -->
+    <string name="menu_setting">设置</string>
+    <string name="advanced_notification">提醒</string>
+    <string name="advanced_alert_off">警报关闭</string>
+    <string name="advanced_alert_on">警报开启</string>
+    <string name="advanced_alert">警报 </string>
+    <string name="map_input_hint">点击搜索您的目的地</string>
+    <string name="dashboard_weather">天气</string>
+    <string name="sos_button">长按以紧急呼救</string>
+    <string name="walk">行走</string>
+    <string name="bike">自行车</string>
+    <string name="car">汽车</string>
+    <string name="nav_start">开始</string>
+    <string name="default_time">默认时间</string>
+    <string name="default_destination">目的地</string>
+    <string name="nav_end">结束</string>
+    <string name="safe_text">很高兴您一直安全</string>
+    <string name="detail_button">细节</string>
+    <string name="setting_privacy">隐私</string>
+    <string name="home_text_2">小妙招：在被汽车撞到后的六个步骤</string>
+    <string name="home_text_1">PSAFE</string>
+    <string name="red_point_instruction">红点代表维多利亚州五年内涉及行人的交通事故</string>
+    <string name="menu_weather">天气</string>
+
+    <string name="home_card_2_text_1">平安出行</string>
+    <string name="home_card_2_text_2">天气</string>
+    <string name="title_activity_marker">MarkerActivity</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="distance">"距离： "</string>
+    <string name="temperature">"温度： "</string>
+    <string name="humidity">"湿度： "</string>
+    <string name="channel_name">Psafe</string>
+    <string name="channel_description">Psafe的频道</string>
+    <string name="nearDangerousZone">接近危险区域!!!!</string>
+    <string name="home_card_1_text_1">输 入 目 的 地</string>
+    <string name="home_card_1_text_2">送 您 安 全 行 程</string>
+    <string name="home_card_2_tips">小妙招: 先往右看再往左看</string>
+
+    <string name="channel_name_drawer">下拉菜单</string>
+    <string name="default_distance">距离</string>
+    <string name="guidance">帮助</string>
+    <string name="advanced_sound">声音</string>
+    <string name="advanced_sound_on">声音 开</string>
+    <string name="advanced_sound_off">声音 关</string>
+    <string name="setting_contact">联系我们</string>
 </resources>
