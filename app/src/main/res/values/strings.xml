@@ -120,4 +120,7 @@
     <string name="advanced_sound_on">Sound on</string>
     <string name="advanced_sound_off">sound off</string>
     <string name="setting_contact">Contact us</string>
+    <string name="guide1" >Psafe is committed to ensuring pedestrian safety by alerting in areas with a high incidence of car accidents. On the main screen: long press the alert button to call 000; the search box to enter a destination to create a safe route.</string>
+    <string name="guide2">The black dots in the map screen are high hazard areas and will emit notification when pedestrians walk near them.</string>
+    <string name="guide3">INFO page: This page has three main sections: tips, news, and weather.</string>
 </resources>

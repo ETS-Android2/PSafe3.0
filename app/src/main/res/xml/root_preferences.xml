@@ -1,41 +1,25 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="@string/messages_header">
-        <SwitchPreferenceCompat
+        <Preference
             app:key="notification"
             app:title="@string/advanced_notification"
             app:icon="@drawable/ic_baseline_notification_important_24"/>
-
-        <SwitchPreferenceCompat
-            app:dependency="notification"
-            app:key="alert"
-            app:summaryOff="@string/advanced_alert_off"
-            app:summaryOn="@string/advanced_alert_on"
-            app:title="@string/advanced_alert" />
-        <SwitchPreferenceCompat
-            app:dependency="sound"
-            app:key="sound"
-            app:summaryOff="@string/advanced_sound_off"
-            app:summaryOn="@string/advanced_sound_on"
-            app:title="@string/advanced_sound" />
-
-
-
     </PreferenceCategory>
 
 
     <PreferenceCategory app:title="@string/sync_header">
-        <EditTextPreference
+        <Preference
             app:key="guide"
             app:title="@string/guidance"
             app:icon="@drawable/ic_baseline_live_help_24"
             />
-        <EditTextPreference
+        <Preference
             app:key="@string/setting_privacy"
             app:title="@string/setting_privacy"
             app:icon="@drawable/ic_baseline_privacy_tip_24"
             />
-        <EditTextPreference
+        <Preference
             app:key="contactUs"
             app:title="@string/setting_contact"
             app:icon="@drawable/ic_baseline_contact_mail_24"

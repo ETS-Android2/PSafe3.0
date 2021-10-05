@@ -122,4 +122,9 @@
     <string name="advanced_sound_on">声音 开</string>
     <string name="advanced_sound_off">声音 关</string>
     <string name="setting_contact">联系我们</string>
+
+    <string name="guide1" >Psafe致力于确保行人安全，在车祸高发区域进行警报。在主界面：长按警报键可以呼叫000；搜索框输入目的地可以制定安全路线。</string>
+    <string name="guide2">在地图界面中的黑色圆点为危险高发区，当行人走到附近会发出警报。</string>
+    <string name="guide3">信息页面：此页面有三大板块分别为交通小妙招，交通新闻，天气。</string>
+
 </resources>

@@ -81,8 +81,6 @@ public class Repository {
        // News oneNews1 = new News("1","test news","test content", 999,9 ,"www.baidu.com");
         //mDatabase.child("news").child(oneNews1.getId()).setValue(oneNews1);
 
-
-
     }
 
     public void writeNewUser(String id, String title, String content, int like, int dislike, String source,String image,String date) {
@@ -94,37 +92,6 @@ public class Repository {
 
 
 
-        //Log.d(TAG, "bbb" + allNewsArray.get(0).getId() +"  "+allNewsArray.get(0).getContent());
-
-
-    public ArrayList<News> getAllNewsArray1(NewsRecyclerViewAdapter newsAdapter){
-
-
-
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    allNewsArray.add( child.getValue(News.class));
-                    Log.d(TAG,allNewsArray.get(0).getSource());
-                }
-                newsAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-
-        };
-        mDatabase.child("news").addValueEventListener(postListener);
-
-        return allNewsArray;
-
-    }
 
 
 

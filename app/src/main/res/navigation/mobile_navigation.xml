@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_nav_setting_to_nav_help"
             app:destination="@id/nav_help" />
+        <action
+            android:id="@+id/action_nav_setting_to_guideFragmentOne"
+            app:destination="@id/guideFragmentOne" />
     </fragment>
     <fragment
         android:id="@+id/nav_weather"
@@ -98,6 +101,10 @@
             android:id="@+id/action_safeFragment_to_nav_navigation"
             app:destination="@id/nav_navigation" />
     </fragment>
+    <fragment
+        android:id="@+id/guideFragmentOne"
+        android:name="com.example.psafe.ui.help.GuideFragmentOne"
+        android:label="GuideFragmentOne" />
 
 
 </navigation>

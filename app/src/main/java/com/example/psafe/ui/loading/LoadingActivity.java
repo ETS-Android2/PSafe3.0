@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import android.location.Location;
@@ -41,7 +42,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.example.psafe.R;
+import com.example.psafe.data.model.Features;
+import com.example.psafe.data.model.News;
+import com.example.psafe.data.model.Traffic;
+import com.example.psafe.database.Repository;
 import com.example.psafe.databinding.ActivityLoadingBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoadingActivity extends AppCompatActivity {
 
@@ -49,11 +57,13 @@ public class LoadingActivity extends AppCompatActivity {
     private static final long MINIMUM_TIME_BETWEEN_UPDATE = 1000; // in Milliseconds
     LocationManager locationManager;
     public ArrayList<AccidentLocation> accidentLocations = new ArrayList<>();
+    ArrayList<Features> features;
     int progressStatus = 0;
     private ProgressBar progressBar;
     private Handler handler = new Handler();
     String channelId = "psafe";
     private ActivityLoadingBinding activityLoadingBinding;
+    //Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +71,46 @@ public class LoadingActivity extends AppCompatActivity {
         activityLoadingBinding = ActivityLoadingBinding.inflate(getLayoutInflater());
         View view = activityLoadingBinding.getRoot();
         setContentView(view);
+       /*
+        features = new ArrayList<>();
+
+        repository = new Repository();
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+
+
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    features.add(dataSnapshot.getValue(Features.class));
+                    //test.get(test.size()-1).setImage(galleryViewModel.getRepository().getStorage().getReference().child("images").child(child.getValue(News.class).getId()).getPath().toString());
+                    //Log.v(TAG,test.get(test.size()-1).getImage());
+                }
+
+                for(int i = 0; i < features.size(); i++)
+                {
+                    if (features.get(i).getProperties().getACCIDENT_T().equals("2"))
+                    {
+                        accidentLocations.add(new AccidentLocation(features.get(i).getGeometry().getCoordinates().get(1),features.get(i).getGeometry().getCoordinates().get(0)));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+               // Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+
+
+
+            repository.getmDatabase().child("traffic").child("features").addValueEventListener(postListener);
+
+
+
+        */
 
         //ArrayList<AccidentLocation> accidentLocations = new ArrayList<>();
         accidentLocations.add(new AccidentLocation(-37.8152,144.9542));
@@ -117,6 +167,8 @@ public class LoadingActivity extends AppCompatActivity {
             Log.e("Error", e + "");
 
         }
+
+
 
 /*
         try {
