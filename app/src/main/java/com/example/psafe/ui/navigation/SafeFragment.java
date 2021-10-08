@@ -1,4 +1,4 @@
-package com.example.psafe.ui;
+package com.example.psafe.ui.navigation;
 
 import android.os.Bundle;
 

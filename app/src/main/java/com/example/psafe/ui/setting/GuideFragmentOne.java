@@ -1,4 +1,4 @@
-package com.example.psafe.ui.help;
+package com.example.psafe.ui.setting;
 
 import android.os.Bundle;
 

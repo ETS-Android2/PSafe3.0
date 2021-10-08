@@ -97,7 +97,7 @@
     <string name="setting_privacy">Privacy</string>
     <string name="home_text_2">Tips: 6 steps when you get hit by a car</string>
     <string name="home_text_1">PSAFE</string>
-    <string name="red_point_instruction">The red dots represent traffic accidents involving pedestrians in Victoria within five years</string>
+    <string name="red_point_instruction">The black dots represent traffic accidents involving pedestrians in Victoria within five years</string>
     <string name="menu_weather">Weather</string>
 
     <string name="home_card_2_text_1">Going out safely</string>
@@ -120,7 +120,7 @@
     <string name="advanced_sound_on">Sound on</string>
     <string name="advanced_sound_off">sound off</string>
     <string name="setting_contact">Contact us</string>
-    <string name="guide1" >Psafe is committed to ensuring pedestrian safety by alerting in areas with a high incidence of car accidents. On the main screen: long press the alert button to call 000; the search box to enter a destination to create a safe route.</string>
+    <string name="guide1">Psafe is committed to ensuring pedestrian safety by alerting in areas with a high incidence of car accidents. On the main screen: long press the alert button to call 000; the search box to enter a destination to create a safe route.</string>
     <string name="guide2">The black dots in the map screen are high hazard areas and will emit notification when pedestrians walk near them.</string>
     <string name="guide3">INFO page: This page has three main sections: tips, news, and weather.</string>
 </resources>

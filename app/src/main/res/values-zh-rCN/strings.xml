@@ -79,7 +79,7 @@
 
     <!-- Advanced Preferences -->
     <string name="menu_setting">设置</string>
-    <string name="advanced_notification">提醒</string>
+    <string name="advanced_notification">警报</string>
     <string name="advanced_alert_off">警报关闭</string>
     <string name="advanced_alert_on">警报开启</string>
     <string name="advanced_alert">警报 </string>

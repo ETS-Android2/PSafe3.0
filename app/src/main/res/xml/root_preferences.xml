@@ -1,9 +1,10 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="@string/messages_header">
-        <Preference
-            app:key="notification"
-            app:title="@string/advanced_notification"
+        <SwitchPreferenceCompat
+            app:key="alert"
+            app:title="@string/advanced_alert"
+
             app:icon="@drawable/ic_baseline_notification_important_24"/>
     </PreferenceCategory>
 
@@ -15,17 +16,10 @@
             app:icon="@drawable/ic_baseline_live_help_24"
             />
         <Preference
-            app:key="@string/setting_privacy"
+            app:key="privacy"
             app:title="@string/setting_privacy"
             app:icon="@drawable/ic_baseline_privacy_tip_24"
             />
-        <Preference
-            app:key="contactUs"
-            app:title="@string/setting_contact"
-            app:icon="@drawable/ic_baseline_contact_mail_24"
-            />
-
-
 
     </PreferenceCategory>
 

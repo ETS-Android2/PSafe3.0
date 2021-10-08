@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_nav_setting_to_guideFragmentOne"
             app:destination="@id/guideFragmentOne" />
+        <action
+            android:id="@+id/action_nav_setting_to_privacyFragment"
+            app:destination="@id/privacyFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_weather"
@@ -94,8 +97,8 @@
     </fragment>
     <fragment
         android:id="@+id/safeFragment"
-        android:name="com.example.psafe.ui.SafeFragment"
-        android:label="fragment_safe"
+        android:name="com.example.psafe.ui.navigation.SafeFragment"
+        android:label="safe"
         tools:layout="@layout/fragment_safe" >
         <action
             android:id="@+id/action_safeFragment_to_nav_navigation"
@@ -103,8 +106,12 @@
     </fragment>
     <fragment
         android:id="@+id/guideFragmentOne"
-        android:name="com.example.psafe.ui.help.GuideFragmentOne"
-        android:label="GuideFragmentOne" />
+        android:name="com.example.psafe.ui.setting.GuideFragmentOne"
+        android:label="Guide" />
+    <fragment
+        android:id="@+id/privacyFragment"
+        android:name="com.example.psafe.ui.setting.PrivacyFragment"
+        android:label="Privacy" />
 
 
 </navigation>
