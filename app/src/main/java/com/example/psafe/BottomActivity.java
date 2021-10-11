@@ -71,7 +71,7 @@ public class BottomActivity extends AppCompatActivity implements PermissionsList
 
 
         notificationId = 0;
-        accidentLocations.add(new AccidentLocation(-37.8152,144.9542));
+    //    accidentLocations.add(new AccidentLocation(-37.8152,144.9542));
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
