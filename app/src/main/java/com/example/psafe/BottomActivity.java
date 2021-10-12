@@ -2,13 +2,20 @@ package com.example.psafe;
 
 import android.Manifest;
 import android.app.NotificationChannel;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import android.app.NotificationManager;
@@ -39,6 +46,7 @@ import com.mapbox.android.core.permissions.PermissionsManager;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -47,6 +55,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
+
+import static com.google.gson.internal.$Gson$Types.arrayOf;
 
 /**
  * main activty
@@ -68,6 +78,40 @@ public class BottomActivity extends AppCompatActivity implements PermissionsList
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            PermissionsManager permissionsManager = new PermissionsManager(this);
+            permissionsManager.requestLocationPermissions(this);
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        else
+        {
+
+            Log.w("bottom","yes");
+            Intent it3 = new Intent(BottomActivity.this,NotificationService.class);
+            startService(it3);
+        }
+
+        if(!isIgnoringBatteryOptimizations())
+            requestIgnoreBatteryOptimizations();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            PermissionsManager permissionsManager = new PermissionsManager(this);
+            permissionsManager.requestLocationPermissions(this);
+
+            Log.v("permission in serverse","nono");
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+        }
 
 
         notificationId = 0;
@@ -115,36 +159,6 @@ public class BottomActivity extends AppCompatActivity implements PermissionsList
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(getApplicationContext(), channelId)
-                        .setSmallIcon(R.drawable.ic_baseline_notification_important_24)
-                        .setContentTitle(getString(R.string.channel_name))
-                        .setContentText(getString(R.string.nearDangerousZone))
-                        .setVibrate(new long[]{1000, 1000})
-                        .setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-
-
-        Intent notificationIntent = new Intent(getApplicationContext(), BottomActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentIntent);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            PermissionsManager permissionsManager = new PermissionsManager(this);
-            permissionsManager.requestLocationPermissions(this);
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                MINIMUM_TIME_BETWEEN_UPDATE,
-                MINIMUM_DISTANCECHANGE_FOR_UPDATE,
-                (LocationListener) new MyLocationListener(accidentLocations, builder)
-        );
 
 
 
@@ -177,7 +191,26 @@ public class BottomActivity extends AppCompatActivity implements PermissionsList
 
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private boolean isIgnoringBatteryOptimizations() {
+        boolean isIgnoring = false;
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        if(powerManager != null) {
+            isIgnoring = powerManager.isIgnoringBatteryOptimizations(getPackageName());
+        }
+        return isIgnoring;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestIgnoreBatteryOptimizations() {
+        try{
+            Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+            intent.setData(Uri.parse("package:"+ getPackageName()));
+            startActivity(intent);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+/*
     @SuppressWarnings({"MissingPermission"})
 
     public class MyLocationListener implements LocationListener {
@@ -248,6 +281,8 @@ public class BottomActivity extends AppCompatActivity implements PermissionsList
         }
     }
 
+
+ */
     /*   public class ReadAccident extends AsyncTask<String, Integer, ArrayList<AccidentLocation>> {
 
            private Context context;
@@ -312,6 +347,157 @@ public class BottomActivity extends AppCompatActivity implements PermissionsList
     @Override
     protected void onStart() {
         super.onStart();
+        Log.w("lifecycle","onStart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        /*
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(getApplicationContext(), channelId)
+                        .setSmallIcon(R.drawable.ic_baseline_notification_important_24)
+                        .setContentTitle(getString(R.string.channel_name))
+                        .setContentText(getString(R.string.nearDangerousZone))
+                        .setVibrate(new long[]{1000, 1000})
+                        .setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+
+
+        Intent notificationIntent = new Intent(getApplicationContext(), BottomActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+
+
+         */
+
+
+
+
+
+
+        /*
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                MINIMUM_TIME_BETWEEN_UPDATE,
+                MINIMUM_DISTANCECHANGE_FOR_UPDATE,
+                (LocationListener) new MyLocationListener(accidentLocations, builder)
+        );
+
+         */
+        Log.w("lifecycle","onPouse");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
+    /*
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        PackageManager pm = getPackageManager();
+        ResolveInfo homeInfo =
+                pm.resolveActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), 0);
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            ActivityInfo ai = homeInfo.activityInfo;
+            Intent startIntent = new Intent(Intent.ACTION_MAIN);
+            startIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            startIntent.setComponent(new ComponentName(ai.packageName, ai.name));
+            startActivitySafely(startIntent);
+            return true;
+        } else
+            return super.onKeyDown(keyCode, event);
+    }
+    private void startActivitySafely(Intent intent) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "null",
+                    Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Toast.makeText(this, "null",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+     */
+
+    private void requestLocationPermission() {
+
+        boolean foreground = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if (foreground) {
+            boolean background = ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+            if (background) {
+                handleLocationUpdates();
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 1);
+            }
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 1);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+
+            boolean foreground = false, background = false;
+
+            for (int i = 0; i < permissions.length; i++) {
+                if (permissions[i].equalsIgnoreCase(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    //foreground permission allowed
+                    if (grantResults[i] >= 0) {
+                        foreground = true;
+                        Toast.makeText(getApplicationContext(), "Foreground location permission allowed", Toast.LENGTH_SHORT).show();
+                        continue;
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Location Permission denied", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+
+                if (permissions[i].equalsIgnoreCase(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+                    if (grantResults[i] >= 0) {
+                        foreground = true;
+                        background = true;
+                        Toast.makeText(getApplicationContext(), "Background location location permission allowed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Background location location permission denied", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+
+            if (foreground) {
+                if (background) {
+                    handleLocationUpdates();
+                } else {
+                    handleForegroundLocationUpdates();
+                }
+            }
+        }
+    }
+
+    private void handleLocationUpdates() {
+        //foreground and background
+        Toast.makeText(getApplicationContext(),"Start Foreground and Background Location Updates",Toast.LENGTH_SHORT).show();
+    }
+
+    private void handleForegroundLocationUpdates() {
+        //handleForeground Location Updates
+        Toast.makeText(getApplicationContext(),"Start foreground location updates",Toast.LENGTH_SHORT).show();
     }
 
 }
