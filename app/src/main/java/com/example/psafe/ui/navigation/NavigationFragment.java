@@ -20,11 +20,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.psafe.BottomActivity;
+import com.example.psafe.NotificationService;
 import com.example.psafe.R;
 
 import android.graphics.Color;
@@ -177,7 +179,9 @@ public class NavigationFragment extends Fragment implements
 
         Toast.makeText(getContext(), getString(R.string.red_point_instruction), Toast.LENGTH_LONG).show();
 
-
+        Log.w("bottom","yes");
+        Intent it3 = new Intent(getActivity(), NotificationService.class);
+        getActivity().startService(it3);
         return root;
     }
 

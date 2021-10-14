@@ -79,26 +79,14 @@ public class BottomActivity extends AppCompatActivity implements PermissionsList
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            PermissionsManager permissionsManager = new PermissionsManager(this);
-            permissionsManager.requestLocationPermissions(this);
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        else
-        {
 
-            Log.w("bottom","yes");
-            Intent it3 = new Intent(BottomActivity.this,NotificationService.class);
-            startService(it3);
-        }
 
-        if(!isIgnoringBatteryOptimizations())
-            requestIgnoreBatteryOptimizations();
+
+
+
+
+    //    if(!isIgnoringBatteryOptimizations())
+    //        requestIgnoreBatteryOptimizations();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -112,6 +100,14 @@ public class BottomActivity extends AppCompatActivity implements PermissionsList
             // for ActivityCompat#requestPermissions for more details.
 
         }
+        else
+        {
+            Log.w("bottom","yes");
+            Intent it3 = new Intent(BottomActivity.this,NotificationService.class);
+            startService(it3);
+        }
+
+
 
 
         notificationId = 0;

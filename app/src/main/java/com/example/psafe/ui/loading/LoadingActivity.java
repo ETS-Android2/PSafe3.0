@@ -77,8 +77,9 @@ public class LoadingActivity extends AppCompatActivity implements PermissionsLis
 
 
 
-        new Thread(new Runnable() {
-            public void run() {
+
+            new Thread(new Runnable() {
+                public void run() {
                     try {
                         // Sleep for 200 milliseconds.
                         Thread.sleep(2000);
@@ -86,9 +87,10 @@ public class LoadingActivity extends AppCompatActivity implements PermissionsLis
                         e.printStackTrace();
                     }
 
-                startActivity(new Intent(LoadingActivity.this, BottomActivity.class));
-            }
-        }).start();
+                    startActivity(new Intent(LoadingActivity.this, BottomActivity.class));
+                }
+            }).start();
+
 
 
     }
@@ -103,5 +105,10 @@ public class LoadingActivity extends AppCompatActivity implements PermissionsLis
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.v("loading","onstop");
 
+    }
 }

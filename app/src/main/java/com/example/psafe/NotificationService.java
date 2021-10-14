@@ -188,7 +188,7 @@ public class NotificationService extends Service implements PermissionsListener 
 
             createNotificationChannel();
 
-            if(sp.getBoolean("alert",true)) {
+            if(sp.getBoolean("alert",false)) {
                 boolean isFindHarzardZone = false;
 
                 for (int i = 0; i < accidentLocationArrayList.size() && !isFindHarzardZone; i++) {
